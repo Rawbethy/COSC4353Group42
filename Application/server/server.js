@@ -16,7 +16,7 @@ app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 
-const uri = 'mongodb+srv://admin:yes123@cluster0.l7jtovk.mongodb.net/MongoIntro';
+const uri = 'mongodb+srv://admin:' + process.argv[2] + '@cluster0.l7jtovk.mongodb.net/MongoIntro';
 mongoose.connect(uri, {
     useNewUrlParser: true
 });
