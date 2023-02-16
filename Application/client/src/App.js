@@ -1,24 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/navbar";
-import HomePage from "./components/homePage";
-import UsersList from "./components/usersList";
-import CreateUser from "./components/createUser";
+import Login from "./components/login";
+import Logout from "./components/logout"
+import Homepage from "./components/homePage";
+import Register from "./components/register";
 
-function App() {
+
+export default function App() {
+  const[loggedIn, setLogin] = useState(false)
+
   return (
     <Router>
-      <Navbar />
+      <Navbar login={loggedIn}/>
       <br />
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path = "/usersList" element={<UsersList />}></Route>
-        <Route path="/createUser" element={<CreateUser />}></Route>
+        <Route path="/" element={<Homepage />}></Route>
+        <Route path="/register" element={<Register />}></Route>
+        <Route path="/login" element={<Login setLogin={setLogin}/>}></Route>
+        <Route path="/logout" element={<Logout />}></Route>
       </Routes>
     </Router>
   );
 }
-
-export default App;
