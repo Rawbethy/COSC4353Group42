@@ -7,6 +7,7 @@ import Login from "./components/login";
 import Logout from "./components/logout"
 import Homepage from "./components/homePage";
 import Register from "./components/register";
+import Profile from "./components/profile";
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login setLogin={setLogin}/>}></Route>
         <Route path="/logout" element={<Logout />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
       </Routes>
     </Router>
   );
