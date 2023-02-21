@@ -2,35 +2,34 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-function Login(props) {
+function Login() {
 
     const navigate = useNavigate();
-    const[username, setUsername] = useState('');
-    const[password, setPassword] = useState('');
-
     const initialState = {
         username: '',
         password: ''
     }
+    const[creds, setCreds] = useState({
+        initialState
+    })
 
-    const onChangeUsername = e => {
-        setUsername(e.target.value)
-    };
-
-    const onChangePassword = e => {
-        setPassword(e.target.value)
-    };
+    const update = e => {
+        setCreds({
+            ...creds, [e.target.name]: e.target.value
+        })
+    }
 
     const onSubmit = e => {
         e.preventDefault()
         const credentials = {
-            username: username,
-            password: password
+            username: creds.username,
+            password: creds.password
         }
 
         axios.post('http://localhost:5000/login', {credentials}).then((res) => {
             if(res.data.result === true) {
-                props.setLogin(res.data.result)
+                localStorage.setItem('loginStatus', res.data.result)
+                localStorage.setItem('username', creds.username)
                 navigate('/');
             }
             else {
@@ -39,8 +38,7 @@ function Login(props) {
         }).catch((err) => {
             alert('Error: ' + err)
         })
-        setUsername(initialState.username)
-        setPassword(initialState.password)
+        setCreds(initialState);
     };
     
     return (
@@ -57,13 +55,13 @@ function Login(props) {
             }}>
                 <h2>Login:</h2>
                 <div className="username">                        
-                    <input type="text" value={username} placeholder="Username" onChange={onChangeUsername} style={{
+                    <input type="text" name="username" value={creds.username} placeholder="Username" onChange={update} style={{
                         width: "100%"
                     }}/>                      
                 </div>
                 <br />
                 <div className="password">                      
-                    <input type="password" value={password} placeholder="Password" onChange={onChangePassword} style={{
+                    <input type="password" name="password" value={creds.password} placeholder="Password" onChange={update} style={{
                         width: "100%"
                     }}/>
                 </div>

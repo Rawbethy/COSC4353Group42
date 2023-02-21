@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 5000;
 const cors = require('cors');
 
-const usersRouter = require('./routes/users');
+const profileRouter = require('./routes/profile');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register')
 
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
-app.use('/users', usersRouter);
+app.use('/profile', profileRouter);
 
 const uri = 'mongodb+srv://admin:' + process.argv[2] + '@cluster0.l7jtovk.mongodb.net/MongoIntro';
 mongoose.connect(uri, {

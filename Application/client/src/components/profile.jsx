@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-export default function Profile(props) {
+export default function Profile() {
 
     const navigate = useNavigate();
     const [profileData, setProfileData] = useState({ 
         fullname: '', 
-        username: props.username || 'invalidUser', 
+        username: localStorage.getItem('username') || 'invalidUser', 
         address1: '', 
         address2: '', 
         city: '', 
@@ -26,10 +26,10 @@ export default function Profile(props) {
 
     const submitForm = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/profile', profileData)
-        .then(res => {
+        axios.post('http://localhost:5000/profile', {profileData})
+        .then((res) => {
             console.log(res);
-            navigate('/checkout');
+            navigate('/');
         })
         .catch(err => {
             console.log(err);
