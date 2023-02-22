@@ -1,11 +1,12 @@
-import React from 'react'
+import React, {useContext} from 'react';
+import {UserContext} from '../App';
 
 export default function Homepage() {
-    console.log(localStorage.getItem('loginStatus'))
-    if(localStorage.getItem('loginStatus') === 'true') {
+    const {loginStatus, username} = useContext(UserContext);
+    if((loginStatus === 'true') || (loginStatus === true)) {
         return (
             <div>
-                <h2>Welcome back {localStorage.getItem('username')}!</h2>
+                <h2>Welcome back {username}!</h2>
             </div>
         )
     }

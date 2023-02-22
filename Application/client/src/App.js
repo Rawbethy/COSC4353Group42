@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -9,10 +9,21 @@ import Homepage from "./components/homePage";
 import Register from "./components/register";
 import Profile from "./components/profile";
 
+export const UserContext = React.createContext();
 
 export default function App() {
+  const storedUsername = localStorage.getItem('username') || '';
+  const storedLoginStatus = localStorage.getItem('loginStatus') || false;
+  const[username, setUsername] = useState(storedUsername);
+  const[loginStatus, setLoginStatus] = useState(storedLoginStatus)
+
+  useEffect(() => {
+    localStorage.setItem('username', username);
+    localStorage.setItem('loginStatus', loginStatus);
+  }, [username, loginStatus])
 
   return (
+    <UserContext.Provider value={{username, setUsername, loginStatus, setLoginStatus}}>
       <Router>
         <Navbar />
         <br />
@@ -24,5 +35,6 @@ export default function App() {
                 <Route path="/profile" element={<Profile />}></Route>
           </Routes>
       </Router>
+    </UserContext.Provider>
   );
 }

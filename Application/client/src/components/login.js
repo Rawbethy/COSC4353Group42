@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import {UserContext} from '../App';
 
 function Login() {
 
     const navigate = useNavigate();
+    const {setUsername, setLoginStatus} = useContext(UserContext);
     const initialState = {
         username: '',
         password: ''
@@ -28,8 +30,8 @@ function Login() {
 
         axios.post('http://localhost:5000/login', {credentials}).then((res) => {
             if(res.data.result === true) {
-                localStorage.setItem('loginStatus', res.data.result)
-                localStorage.setItem('username', creds.username)
+                setUsername(creds.username);
+                setLoginStatus(true);
                 navigate('/');
             }
             else {
