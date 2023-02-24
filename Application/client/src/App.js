@@ -9,6 +9,7 @@ import Homepage from "./components/homePage";
 import Register from "./components/register";
 import Profile from "./components/profile";
 import QuoteForm from "./components/quoteForm";
+import OrderHistory from "./components/orderHistory";
 
 export const UserContext = React.createContext();
 
@@ -35,6 +36,7 @@ export default function App() {
                 <Route path="/logout" element={<Logout />}></Route>
                 <Route path="/profile" element={<Profile />}></Route>
                 <Route path="/quoteForm" element={<QuoteForm />}></Route>
+                <Route path="/orderHistory" element={<OrderHistory />}></Route>
           </Routes>
       </Router>
     </UserContext.Provider>
