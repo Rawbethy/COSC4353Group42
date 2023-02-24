@@ -3,6 +3,7 @@ import {UserContext} from '../App';
 
 export default function Homepage() {
     const {loginStatus, username} = useContext(UserContext);
+    
     if((loginStatus === 'true') || (loginStatus === true)) {
         return (
             <div>

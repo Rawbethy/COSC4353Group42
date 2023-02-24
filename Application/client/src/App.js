@@ -8,6 +8,7 @@ import Logout from "./components/logout"
 import Homepage from "./components/homePage";
 import Register from "./components/register";
 import Profile from "./components/profile";
+import QuoteForm from "./components/quoteForm";
 
 export const UserContext = React.createContext();
 
@@ -15,7 +16,7 @@ export default function App() {
   const storedUsername = localStorage.getItem('username') || '';
   const storedLoginStatus = localStorage.getItem('loginStatus') || false;
   const[username, setUsername] = useState(storedUsername);
-  const[loginStatus, setLoginStatus] = useState(storedLoginStatus)
+  const[loginStatus, setLoginStatus] = useState(storedLoginStatus);
 
   useEffect(() => {
     localStorage.setItem('username', username);
@@ -33,6 +34,7 @@ export default function App() {
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/logout" element={<Logout />}></Route>
                 <Route path="/profile" element={<Profile />}></Route>
+                <Route path="/quoteForm" element={<QuoteForm />}></Route>
           </Routes>
       </Router>
     </UserContext.Provider>

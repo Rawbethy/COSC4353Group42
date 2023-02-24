@@ -25,7 +25,6 @@ export function Validate(values) {
                 break;
             case 'zip':
                 let len = values[item].length;
-                console.log(len)
                 if(len < 5) {
                     errors.zip = 'Zip should consist of at least 5 characters';
                 }
@@ -53,6 +52,7 @@ export function Validate(values) {
 
 export default function Profile() {
 
+    let errors = {};
     const navigate = useNavigate();
     const {username} = useContext(UserContext);
     const [values, setValues] = useState({
@@ -73,12 +73,13 @@ export default function Profile() {
             ...values,
             [e.target.name]: e.target.value
         }));
+        console.log(values);
     }
 
     const submitForm = (e) => {
         e.preventDefault();
         values.username = username;
-        let errors = Validate(values);
+        errors = Validate(values);
         if(JSON.stringify(errors) === '{}') {
             console.log('No Errors!')
         }
@@ -108,6 +109,7 @@ export default function Profile() {
             <div className="form-group col-md-6">        
                 <label>Full Name</label>
                 <input type="text" className="form-control" name="fullName" placeholder="John Doe" value={values.fullName} onChange={updateField} required/>
+                {errors.fullName && <span>{errors.fullName}</span>}
             </div>
             <div className="form-group col-md-6">        
                 <label>Username</label>
