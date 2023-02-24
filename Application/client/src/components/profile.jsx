@@ -1,32 +1,91 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import {UserContext} from '../App';
+
+export function Validate(values) {
+    let errors = {};
+
+    for(const item in values) {
+        switch(item) {
+            case 'fullName':
+                if(values[item].length >= 50) {
+                    errors.fullName = 'Name should not exceed 50 characters';
+                }
+                break;
+            case 'address1':
+                if(values[item].length >= 100) {
+                    errors.address1 = 'Address 1 should not exceed 100 characters';
+                }
+                break;
+            case 'city':
+                if(values[item].length >= 100) {
+                    errors.city = 'City should not exceed 100 characters';
+                }
+                break;
+            case 'zip':
+                let len = values[item].length;
+                console.log(len)
+                if(len < 5) {
+                    errors.zip = 'Zip should consist of at least 5 characters';
+                }
+                else if(len > 9) {
+                    errors.zip = 'Zip should not exceed 9 characters';
+                }
+                break;
+            case 'phone':
+                let strippedPhone = values[item].replace(/[^\d.-]/g, '');
+                if(strippedPhone.length !== 10) {
+                    errors.phone = 'Invalid phone number';
+                }
+                break;
+            case 'email':
+                if(values[item].match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) === 0) {
+                    errors.email = 'Email format is not valid';
+                } 
+                break;     
+            default:
+                break;
+        }
+    }
+    return errors;
+};
 
 export default function Profile() {
 
     const navigate = useNavigate();
-    const [profileData, setProfileData] = useState({ 
-        fullname: '', 
-        username: localStorage.getItem('username') || 'invalidUser', 
-        address1: '', 
-        address2: '', 
-        city: '', 
-        state: 'TX', 
-        zip: '', 
-        phone: '', 
-        email: '' 
+    const {username} = useContext(UserContext);
+    const [values, setValues] = useState({
+        fullName: '',
+        username: username,
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zip: '',
+        phone: '',
+        email: ''
     });
 
     const updateField = (e) => {
-        setProfileData({
-            ...profileData,
+        e.persist();
+        setValues((values) => ({
+            ...values,
             [e.target.name]: e.target.value
-        });
+        }));
     }
 
     const submitForm = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/profile', {profileData})
+        values.username = username;
+        let errors = Validate(values);
+        if(JSON.stringify(errors) === '{}') {
+            console.log('No Errors!')
+        }
+        else {
+            console.log(errors);
+        }
+        axios.post('http://localhost:5000/profile', {values})
         .then((res) => {
             console.log(res);
             navigate('/');
@@ -35,6 +94,10 @@ export default function Profile() {
             console.log(err);
         });
     }
+
+    useEffect(() => {
+        setValues(values);
+    }, [values])
     
     return (
         <div className="container">
@@ -44,28 +107,28 @@ export default function Profile() {
         <div className="form-row">
             <div className="form-group col-md-6">        
                 <label>Full Name</label>
-                <input type="text" className="form-control" name="fullname" placeholder="John Doe" value={profileData.fullname} onChange={updateField} />
+                <input type="text" className="form-control" name="fullName" placeholder="John Doe" value={values.fullName} onChange={updateField} required/>
             </div>
             <div className="form-group col-md-6">        
                 <label>Username</label>
-                <input type="text" className="form-control" name="username" placeholder={profileData.username} value={profileData.username} onChange={updateField} disabled />
+                <input type="text" className="form-control" name="username" placeholder={username} value={values.username} onChange={updateField} disabled />
             </div>
             <div className="form-group col-md-6">
                 <label>Address 1</label>
-                <input type="text" className="form-control" name="address1" placeholder="1234 Main St" value={profileData.address1} onChange={updateField} />
+                <input type="text" className="form-control" name="address1" placeholder="1234 Main St" value={values.address1} onChange={updateField} required/>
             </div>
             <div className="form-group">
                 <label>Address 2</label>
-                <input type="text" className="form-control" name="address2" placeholder="Apartment, studio, or floor" value={profileData.address2} onChange={updateField} />
+                <input type="text" className="form-control" name="address2" placeholder="Apartment, studio, or floor" value={values.address2} onChange={updateField} />
             </div>
             <div className="form-row">
                 <div className="form-group col-md-6">
                     <label>City</label>
-                    <input type="text" className="form-control" name="city" value={profileData.city} onChange={updateField} />
+                    <input type="text" className="form-control" name="city" value={values.city} onChange={updateField} required/>
                 </div>
                 <div className="form-group col-md-4">
                     <label>State</label>
-                    <select id="inputState" className="form-control" name="state" value={profileData.state} onChange={updateField}>
+                    <select id="inputState" className="form-control" name="state" value={values.state} onChange={updateField}>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
                         <option value="AZ">Arizona</option>
@@ -121,16 +184,16 @@ export default function Profile() {
                 </div>
                 <div className="form-group col-md-2">    
                     <label>Zip</label>
-                    <input type="text" className="form-control" name="zip" value={profileData.zip} onChange={updateField} />
+                    <input type="text" className="form-control" name="zip" value={values.zip} onChange={updateField} required/>
                 </div>
             </div>
             <div className="form-group">
                 <label>Phone</label>
-                <input type="text" className="form-control" name="phone" value={profileData.phone} onChange={updateField} />
+                <input type="text" className="form-control" name="phone" value={values.phone} onChange={updateField} required/>
             </div>
             <div className="form-group">
                 <label>Email</label>
-                <input type="text" className="form-control" name="email" value={profileData.email} onChange={updateField} />
+                <input type="text" className="form-control" name="email" value={values.email} onChange={updateField} required/>
             </div>
             <button style={{ marginTop: '5px' }}type="submit" className="btn btn-primary">Submit</button>
         </div>

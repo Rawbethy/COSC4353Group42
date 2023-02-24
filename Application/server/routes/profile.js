@@ -1,9 +1,20 @@
 const router = require('express').Router();
-let User = require('../models/user');
+let ProfileInfo = require('../models/profileInfo');
 
 router.route('/').post((req, res) => {
-    profileInfo = req.body.profileData;
+    const profileInfo = req.body.values;
     console.log(profileInfo);
+    // const information = new ProfileInfo({
+    //     fullName: profileInfo.fullName,
+    //     address1: profileInfo.address1,
+    //     address2: profileInfo.address2,
+    //     city: profileInfo.city,
+    //     state: profileInfo.state,
+    //     zip: profileInfo.zip,
+    //     phone: profileInfo.phone,
+    //     email: profileInfo.email
+    // })
+    // console.log(information.fullName);
 });
 
 // router.route('/createUser').post((req, res) => {

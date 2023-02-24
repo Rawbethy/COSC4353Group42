@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 5000;
 const cors = require('cors');
 
-const profileRouter = require('./routes/profile');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register')
+const profileRouter = require('./routes/profile');
 
 require('dotenv').config();
 
