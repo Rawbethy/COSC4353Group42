@@ -39,6 +39,7 @@ export function toNumeric(values, setValues) {
                  }
                 break;   
             default:
+                console.log(values);
                 break;
         }
     }
@@ -47,7 +48,6 @@ export function toNumeric(values, setValues) {
 
 export default function QuoteForm() {
 
-    let errors = {};
     const navigate = useNavigate();
     const {username} = useContext(UserContext);
     const [values, setValues] = useState({
@@ -56,6 +56,7 @@ export default function QuoteForm() {
         pricepergallon: '',
         total: ''
     });
+    const [errors, setErrors] = useState({});
 
     const updateField = (e) => {
         e.persist();
@@ -63,18 +64,13 @@ export default function QuoteForm() {
             ...values,
             [e.target.name]: e.target.value
         }));
+        console.log(values);
     }
 
     const submitQuoteForm = (e) => {
         e.preventDefault();
-        values.username = username;
-        errors = toNumeric(values, setValues);
-        if(JSON.stringify(errors) === '{}') {
-            console.log('No Errors!')
-        }
-        else {
-            console.log(errors);
-        }
+        setErrors(toNumeric(values, setValues));
+        console.log(errors);
         axios.post('http://localhost:5000/profile', {values})
         .then((res) => {
             console.log(res);
@@ -103,7 +99,8 @@ export default function QuoteForm() {
             <h2>Fuel Quote Form:</h2>
                 <div className="address"> 
                     <label>Delivery Address:</label>                       
-                    <input type="text" name="address" placeholder="Enter Address" autoComplete="off" onChange={updateField} style={{ width: "100%" }}/>                      
+                    <input type="text" name="address" placeholder="Enter Address" autoComplete="off" onChange={updateField} style={{ width: "100%" }}/>  
+                    {errors.address && <span style={{"color": "red"}}>{errors.address}</span>}                    
                 </div>
                 <br />
         
@@ -116,18 +113,21 @@ export default function QuoteForm() {
                 <label>Gallons Requested:</label>
                 <div className="gallonsreq">
                 <input type="number" name="gallonsreq" placeholder="ex. 1, 10.5" autoComplete="off" min="0" step="any" onChange={updateField} required style={{width: "100%"}}/>
+                {errors.gallonsreq && <span style={{"color": "red"}}>{errors.gallonsreq}</span>}
                 </div>
                 <br />
         
                 <label>Suggested Price / Gallon:</label>
                 <div className="pricepergallon">
                 <input type="readonly" name="pricepergallon" placeholder="Price per Gallon" autoComplete="off" onChange={updateField} style={{width: "100%"}}/>
+                {errors.pricepergallon && <span style={{"color": "red"}}>{errors.pricepergallon}</span>}
                 </div>
                 <br />
         
                 <label>Total Amount Due</label>
                 <div className="total">
                 <input type="readonly" name="total" placeholder="Total" autoComplete="off" onChange={updateField} style={{ width: "100%" }}/>
+                {errors.final && <span style={{"color": "red"}}>{errors.final}</span>}
                 </div>
         
                 <div className="submit" style={{position: "relative"}}>

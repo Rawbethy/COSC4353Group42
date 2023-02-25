@@ -3,7 +3,7 @@ let ProfileInfo = require('../models/profileInfo');
 
 router.route('/').post((req, res) => {
     const profileInfo = req.body.values;
-    console.log(profileInfo);
+    res.json({"message": "Information successfully submitted!"})
     // const information = new ProfileInfo({
     //     fullName: profileInfo.fullName,
     //     address1: profileInfo.address1,

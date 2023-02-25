@@ -39,7 +39,7 @@ export function Validate(values) {
                 }
                 break;
             case 'email':
-                if(values[item].match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) === 0) {
+                if(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values[item]) === false) {
                     errors.email = 'Email format is not valid';
                 } 
                 break;     
@@ -52,7 +52,6 @@ export function Validate(values) {
 
 export default function Profile() {
 
-    let errors = {};
     const navigate = useNavigate();
     const {username} = useContext(UserContext);
     const [values, setValues] = useState({
@@ -66,6 +65,7 @@ export default function Profile() {
         phone: '',
         email: ''
     });
+    const [errors, setErrors] = useState({});
 
     const updateField = (e) => {
         e.persist();
@@ -73,23 +73,16 @@ export default function Profile() {
             ...values,
             [e.target.name]: e.target.value
         }));
-        console.log(values);
     }
 
     const submitForm = (e) => {
         e.preventDefault();
         values.username = username;
-        errors = Validate(values);
-        if(JSON.stringify(errors) === '{}') {
-            console.log('No Errors!')
-        }
-        else {
-            console.log(errors);
-        }
+        setErrors(Validate(values));
         axios.post('http://localhost:5000/profile', {values})
         .then((res) => {
-            console.log(res);
             navigate('/');
+            alert(res.data.message);
         })
         .catch(err => {
             console.log(err);
@@ -109,7 +102,7 @@ export default function Profile() {
             <div className="form-group col-md-6">        
                 <label>Full Name</label>
                 <input type="text" className="form-control" name="fullName" placeholder="John Doe" value={values.fullName} onChange={updateField} required/>
-                {errors.fullName && <span>{errors.fullName}</span>}
+                {errors.fullName && <span style={{"color": "red"}}>{errors.fullName}</span>}
             </div>
             <div className="form-group col-md-6">        
                 <label>Username</label>
@@ -118,8 +111,9 @@ export default function Profile() {
             <div className="form-group col-md-6">
                 <label>Address 1</label>
                 <input type="text" className="form-control" name="address1" placeholder="1234 Main St" value={values.address1} onChange={updateField} required/>
+                {errors.address1 && <span style={{"color": "red"}}>{errors.address1}</span>}
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-6">
                 <label>Address 2</label>
                 <input type="text" className="form-control" name="address2" placeholder="Apartment, studio, or floor" value={values.address2} onChange={updateField} />
             </div>
@@ -127,6 +121,7 @@ export default function Profile() {
                 <div className="form-group col-md-6">
                     <label>City</label>
                     <input type="text" className="form-control" name="city" value={values.city} onChange={updateField} required/>
+                    {errors.city && <span style={{"color": "red"}}>{errors.city}</span>}
                 </div>
                 <div className="form-group col-md-4">
                     <label>State</label>
@@ -184,18 +179,21 @@ export default function Profile() {
                         <option value="WY">Wyoming</option>
                     </select>
                 </div>
-                <div className="form-group col-md-2">    
+                <div className="form-group col-md-4">    
                     <label>Zip</label>
                     <input type="text" className="form-control" name="zip" value={values.zip} onChange={updateField} required/>
+                    {errors.zip && <div style={{"color": "red"}}>{errors.zip}</div>}
                 </div>
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-4">
                 <label>Phone</label>
                 <input type="text" className="form-control" name="phone" value={values.phone} onChange={updateField} required/>
+                {errors.phone && <span style={{"color": "red"}}>{errors.phone}</span>}
             </div>
-            <div className="form-group">
+            <div className="form-group col-md-7">
                 <label>Email</label>
                 <input type="text" className="form-control" name="email" value={values.email} onChange={updateField} required/>
+                {errors.email && <div style={{"color": "red"}}>{errors.email}</div>}
             </div>
             <button style={{ marginTop: '5px' }}type="submit" className="btn btn-primary">Submit</button>
         </div>
