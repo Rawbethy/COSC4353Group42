@@ -5,22 +5,39 @@ import {UserContext} from '../App';
 
 export function toNumeric(values) {
     let errors = {};
+
     for(const item in values) {
         switch(item) {
             case 'gallonsreq':
-                // let num = toNum(gallonsreq);
-                // setValue((values) => {
-                //     ...values,
-                //     // values[gallonsreq] = num
-                // })
-                errors.gallonreq = 'the fuck'
+                let num = Number(values[item]);
+                setValue((values) => ({
+                    ...values,
+                    gallonsreq: num
+                 }));
+                 if(values[item] < 0) {
+                    errors.gallonreq = 'Needs to be a numeric amount of gallons'
+                 }
                 break;
             case 'pricepergallon':
-                
+                let price = Number(values[item]);
+                setValue((values) => ({
+                    ...values,
+                    pricepergallon: price
+                 }));
+                 if (values[item] < 0) {
+                    errors.pricepergallon = 'Needs valid sale price'
+                 }
                 break;
             case 'total':
-                
-                break;    
+                let final = Number(values[item]);
+                setValue((values) => ({
+                    ...values,
+                    total: final
+                 }));
+                 if(values[item] < 0) {
+                    errors.final = 'Total amount not calculatable'
+                 }
+                break;   
             default:
                 break;
         }
@@ -105,7 +122,7 @@ export default function QuoteForm() {
         
                 <label>Suggested Price / Gallon:</label>
                 <div className="pricepergallon">
-                <input type="readonly" name="pricepergallon"placeholder="Price per Gallon" autoComplete="off" onChange={updateField} style={{width: "100%"}}/>
+                <input type="readonly" name="pricepergallon" placeholder="Price per Gallon" autoComplete="off" onChange={updateField} style={{width: "100%"}}/>
                 </div>
                 <br />
         
