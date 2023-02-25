@@ -3,14 +3,14 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {UserContext} from '../App';
 
-export function toNumeric(values) {
+export function toNumeric(values, setValues) {
     let errors = {};
 
     for(const item in values) {
         switch(item) {
             case 'gallonsreq':
                 let num = Number(values[item]);
-                setValue((values) => ({
+                setValues((values) => ({
                     ...values,
                     gallonsreq: num
                  }));
@@ -20,7 +20,7 @@ export function toNumeric(values) {
                 break;
             case 'pricepergallon':
                 let price = Number(values[item]);
-                setValue((values) => ({
+                setValues((values) => ({
                     ...values,
                     pricepergallon: price
                  }));
@@ -30,7 +30,7 @@ export function toNumeric(values) {
                 break;
             case 'total':
                 let final = Number(values[item]);
-                setValue((values) => ({
+                setValues((values) => ({
                     ...values,
                     total: final
                  }));
@@ -44,7 +44,6 @@ export function toNumeric(values) {
     }
     return errors;
 }
-
 
 export default function QuoteForm() {
 
