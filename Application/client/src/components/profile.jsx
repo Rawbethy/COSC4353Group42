@@ -55,8 +55,8 @@ export default function Profile() {
     const navigate = useNavigate();
     const {username} = useContext(UserContext);
     const [values, setValues] = useState({
-        fullName: '',
         username: username,
+        fullName: '',
         address1: '',
         address2: '',
         city: '',
@@ -77,7 +77,6 @@ export default function Profile() {
 
     const submitForm = (e) => {
         e.preventDefault();
-        values.username = username;
         setErrors(Validate(values));
         axios.post('http://localhost:5000/profile', {values})
         .then((res) => {
@@ -90,8 +89,20 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        setValues(values);
-    }, [values])
+        axios.get('http://localhost:5000/profile', {params: {
+            'username': username}
+        }).then((res) => {
+            if(!res.data) {
+                setValues(values);
+            }
+            else {
+                setValues(res.data);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }, [])
     
     return (
         <div className="container">
