@@ -1,4 +1,4 @@
-const uri = 'mongodb+srv://admin:yes123@cluster0.l7jtovk.mongodb.net/MongoIntro'
+const uri = 'mongodb+srv://admin:yes123@cluster0.l7jtovk.mongodb.net/test'
 const mongoose = require('mongoose');
 const testUser = require('../models/testUser');
 const mockUser = new testUser({
@@ -17,7 +17,6 @@ describe('Delete and Insert', () => {
     })
 
     afterAll(done => {
-        mongoose.connection.close();
         done();
     })
 
@@ -42,4 +41,23 @@ describe('Delete and Insert', () => {
         expect(savedUser.email).toBe(validUser.email);
         expect(savedUser.password).toBe(validUser.password);
     });
+})
+
+describe('Find query', () => {
+
+    beforeAll(done => {
+        done();
+    })
+
+    afterAll(done => {
+        mongoose.connection.close();
+        done();
+    })
+
+    it('Test to find previously inserted user', async() => {
+        const findUser = await testUser.findOne({username: mockUser.username});
+        expect(findUser.username).toBe(mockUser.username);
+        expect(findUser.password).toBe(mockUser.password);
+        expect(findUser.email).toBe(mockUser.email);
+    })
 })
