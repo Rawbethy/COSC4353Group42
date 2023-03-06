@@ -1,6 +1,20 @@
 const router = require('express').Router();
 let Quotes = require('../models/quotes');
 
+router.route('/').get(async(req, res) => {
+    const user = req.query.username
+    await Quotes.findOne({username: user}).then((res1) => {
+        if(res1) {
+            res.json(res1.quotes);
+        }
+        else {
+            res.json({noQuotes: true})
+        }
+    }).catch((err) => {
+        console.log(err);
+    })
+})
+
 router.route('/').post(async(req,res) => {
     const quote = req.body.values; 
     await Quotes.findOne({username: quote.username}).then(async(res1) => {

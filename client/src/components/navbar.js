@@ -19,7 +19,7 @@ export default function NavigationBar() {
                         <Nav.Link href="/" >Home Page</Nav.Link> 
                         <Nav.Link href="/profile" >Profile</Nav.Link>
                         <Nav.Link href="/quoteForm" >Quote Form</Nav.Link>
-                        <Nav.Link href="/orderHistory" >Order History</Nav.Link>
+                        <Nav.Link href="/history" >Order History</Nav.Link>
                         <Nav.Link href="/logout" >Logout</Nav.Link>     
                     </Nav>
                 </Navbar.Collapse>

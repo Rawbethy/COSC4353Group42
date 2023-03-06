@@ -36,7 +36,7 @@ export default function App() {
                 <Route path="/logout" element={<Logout />}></Route>
                 <Route path="/profile" element={<Profile />}></Route>
                 <Route path="/quoteForm" element={<QuoteForm />}></Route>
-                <Route path="/orderHistory" element={<OrderHistory />}></Route>
+                <Route path="/history" element={<OrderHistory />}></Route>
           </Routes>
       </Router>
     </UserContext.Provider>

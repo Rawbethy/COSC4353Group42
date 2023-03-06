@@ -32,7 +32,7 @@ export default function QuoteForm() {
     const [values, setValues] = useState({
         username: username,
         address: '',
-        deliveryDate: new Date(),
+        deliveryDate: '',
         gallonsReq: '',
         pricePerGallon: 0,
         total: 0
@@ -85,7 +85,7 @@ export default function QuoteForm() {
         
                 <div className="deliverydate"> 
                     <label>Devliery Date:</label>                    
-                    <input type="date"/>
+                    <input type="date" name='deliveryDate' onChange={updateField} required/>
                 </div>
                 <br />
         
