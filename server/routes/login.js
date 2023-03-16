@@ -1,21 +1,20 @@
 const router = require('express').Router();
-let User = require('../models/user')
+const bcrypt = require('bcryptjs');
+let User = require('../models/user');
 
-router.route('/').post((req, res) => {
+router.route('/').post(async(req, res) => {
     const cred = req.body.credentials;
-    const userCred = new User({
-        username: cred.username,
-        password: cred.password
-    })
 
-    User.findOne({username: userCred.username, password: userCred.password}).then((result) => {
-        if(result != null) {
-            res.json({result: true})
-        }
-        else {
-            res.json({result: false})
-        }
-    })
+    const user = await User.findOne({username: cred.username});
+    const hashedPassword = user.password;
+    const isValid = await bcrypt.compare(cred.password, hashedPassword);
+
+    if(isValid) {
+        res.json({result: true});
+    }
+    else {
+        res.json({result: false});
+    }
 });
 
 module.exports = router
