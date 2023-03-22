@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext, useCallback} from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import {DropdownSubmenu} from 'react-bootstrap-submenu';
 import {UserContext} from '../App';
@@ -14,11 +14,16 @@ export default function OrderHistory() {
   const {username} = useContext(UserContext);
 
   const sortKey = (key) => {
-    let direction = 'Asc';
-    if(sort.key === key && sort.direction === 'Asc') {
-      direction = 'Desc'
+    if(key === 'Reset') {
+      setSort([key, ''])
     }
-    setSort({key, direction})
+    else {
+      let direction = 'Asc';
+      if(sort.key === key && sort.direction === 'Asc') {
+        direction = 'Desc'
+      }
+      setSort({key, direction})
+    }
   }
 
   const changeSort = () => {
@@ -53,6 +58,19 @@ export default function OrderHistory() {
     )
   }
 
+  const fetchRequest = useCallback(() => {
+    async function fetchData() {
+      await axios.get('http://localhost:5000/quotes', {params: {username: username}}).then((res) => {
+        if(res.data.noQuotes !== true) {
+          setOrders(res.data);
+        }
+      }).catch(err => {
+        console.error(err);
+      })
+    }
+    fetchData();
+  }, [])
+
   useEffect(() => {
     async function fetchData() {
       await axios.get('http://localhost:5000/quotes', {params: {username: username}}).then((res) => {
@@ -68,33 +86,39 @@ export default function OrderHistory() {
 
   return (
     <div className="main">
+
+      <div className="reset" style = {{float: 'right'}}>
+        <button type='button' class='btn btn-link' onClick={() => window.location.reload(false)}>
+          Reset Filters
+        </button>
+      </div>
       
       <div className="table">
         <table class="table table-responsive" style={{border:1}} >
           <thead>
             <tr>
               <th>
-                <button type='button' onClick={() => sortKey('Index')}>
+                <div className="index" style={{paddingBottom: '7.5px'}}>
                   Index
-                </button>
+                </div>
               </th>
               <th>
-                <button type='button' onClick={() => sortKey('Date')}>
+                <button type='button' class='btn btn-link' onClick={() => sortKey('Date')}>
                   Delivery Date
                 </button>
               </th>
               <th>
-                <button type='button' onClick={() => sortKey('Gallons')}>
+                <button type='button' class='btn btn-link' onClick={() => sortKey('Gallons')}>
                   Gallons Requested
                 </button>
               </th>
               <th>
-                <button type='button' onClick={() => sortKey('Price/Gal')}>
+                <button type='button' class='btn btn-link' onClick={() => sortKey('Price/Gal')}>
                   Price/Gal
                 </button>
               </th>
               <th>
-                <button type='button' onClick={() => sortKey('Total')}>
+                <button type='button' class='btn btn-link' onClick={() => sortKey('Total')}>
                   Total
                 </button>
               </th>
