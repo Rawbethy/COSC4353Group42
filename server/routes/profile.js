@@ -1,16 +1,17 @@
 const router = require('express').Router();
 let ProfileInfo = require('../models/profileInfo');
 
-router.route('/').get((req, res) => {
-    ProfileInfo.findOne({username: req.query.username})
-    .then((result) => {
-        if(res != null) {
-            res.json(result);
-        }
-    })
+router.route('/').get(async (req, res) => {
+    let result = await ProfileInfo.findOne({username: req.query.username})
+    if(result != null) {
+        res.json(result);
+        return
+    }
+
+    res.json({message: 'Profile not found'})
 })
 
-router.route('/').post(async(req, res) => {
+router.route('/').post(async (req, res) => {
     const profileInfo = req.body.values;
     await ProfileInfo.findOne({username: profileInfo.username})
     .then((result) => {
@@ -25,7 +26,7 @@ router.route('/').post(async(req, res) => {
             phone: profileInfo.phone,
             email: profileInfo.email
         })
-        if(result) {
+        if(result != null) {
             ProfileInfo.updateOne({username: profileInfo.username}, {$set: information}).then(() => {
                 res.json({message: 'User updated successfully!'})
             }).catch((err) => {
@@ -35,7 +36,7 @@ router.route('/').post(async(req, res) => {
         else {
             information.save()
             .then(() => {
-                res.json({"message": "Information successfully submitted!"})})
+                res.json({message: "Information successfully submitted!"})})
             .catch((err) => {
                 res.json(err)
             })

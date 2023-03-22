@@ -14,7 +14,19 @@ router.route('/').post((req, res) => {
             .catch(err => res.json(err))
         }
         else {
-            res.json('User already exists')
+            res.json({message: 'User already exists'})
+        }
+    })
+
+})
+router.route('/').delete((req, res) => {
+    const user = req.body
+    User.findOneAndDelete({username: user.username}).then((result) => {
+        if(result == null) {
+            res.json({message: 'User does not exist'})
+        }
+        else {
+            res.json({message: 'User deleted'})
         }
     })
 })

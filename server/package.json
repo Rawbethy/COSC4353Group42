@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --no-cache --detectOpenHandles",
     "dev": "nodemon server"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
-    "jest": "^29.4.3"
+    "jest": "^29.4.3",
+    "supertest": "^6.3.3"
   }
 }
