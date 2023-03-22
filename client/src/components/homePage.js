@@ -6,15 +6,19 @@ export default function Homepage() {
     
     if((loginStatus === 'true') || (loginStatus === true)) {
         return (
-            <div>
-                <h2>Welcome back {username}!</h2>
+            <div style={{position: 'absolute', top: '4%', right: '0px', bottom: '0px', left: '0px', backgroundColor: 'black'}}>
+                <div className="text" style={{position: 'absolute', top: '5%', left: '3%'}}>
+                    <h2 style={{fontSize: '50px', color: 'white'}}>Welcome back {username}!</h2>
+                </div>
             </div>
         )
     }
     else {
         return (
-            <div>
-                <h2>This is the Home Page component!</h2>
+            <div style={{position: 'absolute', top: '4%', right: '0px', bottom: '0px', left: '0px', backgroundColor: 'black'}}>
+                <div className="text" style={{position: 'absolute', top: '5%', left: '3%'}}>
+                    <h2 style={{fontSize: '50px', color: 'white'}}>This is the home page component!</h2>
+                </div>
             </div>
         )
     }

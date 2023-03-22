@@ -1,9 +1,14 @@
-import React, {useContext} from 'react';
-import {Nav, Navbar} from 'react-bootstrap'
+import React, {useState, useContext} from 'react';
+import {Nav, Navbar, NavDropdown} from 'react-bootstrap'
 import {UserContext} from '../App';
 
 export default function NavigationBar() {
     const{loginStatus} = useContext(UserContext);
+    const[dropdown, setDropdown] = useState(false);
+
+    function toggleDropdown() {
+        setDropdown(!dropdown);
+    }
     
     if((loginStatus === 'true') || (loginStatus === true)) {
         return (
@@ -18,8 +23,10 @@ export default function NavigationBar() {
                     <Nav>
                         <Nav.Link href="/" >Home Page</Nav.Link> 
                         <Nav.Link href="/profile" >Profile</Nav.Link>
-                        <Nav.Link href="/quoteForm" >Quote Form</Nav.Link>
-                        <Nav.Link href="/history" >Order History</Nav.Link>
+                        <NavDropdown title='Quotes' id='basic-nav-dropdown' show={dropdown} onClick={toggleDropdown}>
+                            <NavDropdown.Item href="/quoteForm">Form</NavDropdown.Item>
+                            <NavDropdown.Item href="/history">History</NavDropdown.Item>
+                        </NavDropdown>
                         <Nav.Link href="/logout" >Logout</Nav.Link>     
                     </Nav>
                 </Navbar.Collapse>
