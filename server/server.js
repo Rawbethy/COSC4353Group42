@@ -18,7 +18,7 @@ app.use('/login', loginRouter);
 app.use('/profile', profileRouter);
 app.use('/quotes', quotesRouter);
 
-const uri = 'mongodb+srv://admin:' + process.argv[2] + '@cluster0.l7jtovk.mongodb.net/MongoIntro';
+const uri = 'mongodb+srv://admin:' + process.env.DB_PASSWORD + '@cluster0.l7jtovk.mongodb.net/MongoIntro';
 mongoose.connect(uri, {
     useNewUrlParser: true
 });
