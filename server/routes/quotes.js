@@ -3,16 +3,13 @@ let Quotes = require('../models/quotes');
 
 router.route('/').get(async(req, res) => {
     const user = req.query.username
-    await Quotes.findOne({username: user}).then((res1) => {
-        if(res1) {
-            res.json(res1.quotes);
-        }
-        else {
-            res.json({noQuotes: true})
-        }
-    }).catch((err) => {
-        console.log(err);
-    })
+    let res1 = await Quotes.findOne({username: user})
+    if(res1) {
+        res.json(res1.quotes);
+    }
+    else {
+        res.json({noQuotes: true})
+    }
 })
 
 router.route('/').post(async(req,res) => {
