@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react';
-import {Nav, Navbar, NavDropdown} from 'react-bootstrap'
+import {Nav, Navbar, NavDropdown, NavLink} from 'react-bootstrap'
 import {UserContext} from '../App';
+import logo from "../imgs/logo3White.png"
 
 export default function NavigationBar() {
     const{loginStatus} = useContext(UserContext);
@@ -15,13 +16,17 @@ export default function NavigationBar() {
             <div class="app">
                 <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
                 <Navbar.Brand>
-                    <Nav.Link href='/'>MyReactApp</Nav.Link>
+                    <NavLink href="/" classname="homebutton">
+                        <a href="/" className="logo">
+                            <img style={{ width: 50, height: 50 }}className="logo" src={logo} alt=""/>
+                            </a>
+                                </NavLink>
                 </Navbar.Brand>
     
                 <Navbar.Toggle />
                 <Navbar.Collapse>
                     <Nav>
-                        <Nav.Link href="/" >Home Page</Nav.Link> 
+                        <Nav.Link href="/" >Home</Nav.Link> 
                         <Nav.Link href="/profile" >Profile</Nav.Link>
                         <NavDropdown title='Quotes' id='basic-nav-dropdown' show={dropdown} onClick={toggleDropdown}>
                             <NavDropdown.Item href="/quoteForm">Form</NavDropdown.Item>
