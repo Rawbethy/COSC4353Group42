@@ -14,7 +14,7 @@ router.route('/').post((req, res) => {
             .catch(err => res.json(err))
         }
         else {
-            res.json({message: 'User already exists'})
+            res.json({message: 'User already registered'})
         }
     })
 
@@ -26,7 +26,7 @@ router.route('/').delete((req, res) => {
             res.json({message: 'User does not exist'})
         }
         else {
-            res.json({message: 'User deleted'})
+            res.json({message: 'User successfully deleted'})
         }
     })
 })

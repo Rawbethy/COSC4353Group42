@@ -28,7 +28,7 @@ router.route('/').post(async (req, res) => {
     }
     if(profile != null) {
         await profile.updateOne({$set: information})
-        res.json({message: 'User updated successfully!'})
+        res.json({message: 'User profile updated successfully!'})
     }
     else {
         await new ProfileInfo(information).save() 
