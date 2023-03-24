@@ -85,6 +85,8 @@ describe('POST /profile', () => {
         let res = await request(app).post('/profile').send({
             values: {
                 username: mockUser.username,
+                fullName: "Test Userz",
+                address1: "1234 Main Sts",
                 address2: "Apt 12223",
                 city: "San Jose",
                 state: "CA",
@@ -94,8 +96,17 @@ describe('POST /profile', () => {
             }
         })
         expect(res.statusCode).toBe(200)
-        //expect(res.body.message).toBe("User updated successfully!")
+        expect(res.body.message).toBe("User updated successfully!")
     })
+})
+
+describe('GET /profile', () => {
+    it('should return the user profile', async () => {
+        let res = await request(app).get('/profile').query({ username: mockUser.username })
+        expect(res.statusCode).toBe(200)
+        expect(res.body.username).toBe(mockUser.username)
+    })
+
 })
 
 describe('GET /quotes', () => {

@@ -7,18 +7,17 @@ const mockUser = new testUser({
     email: 'sampleEmail@gmail.com'
 })
 
+beforeAll(async () => {
+    await mongoose.connect(uri, {
+        useNewUrlParser: true
+    })
+})
+
+afterAll(async () => {
+    await mongoose.connection.close();
+})
+
 describe('Delete and Insert', () => {
-
-    beforeAll(done => {
-        mongoose.connect(uri, {
-            useNewUrlParser: true
-        })
-        done();
-    })
-
-    afterAll(done => {
-        done();
-    })
 
     it('delete user if already exists', async() => {
         const alreadyExists = await testUser.findOne({username: mockUser.username});
@@ -45,15 +44,6 @@ describe('Delete and Insert', () => {
 
 describe('Find query', () => {
 
-    beforeAll(done => {
-        done();
-    })
-
-    afterAll(done => {
-        mongoose.connection.close();
-        done();
-    })
-
     it('Test to find previously inserted user', async() => {
         const findUser = await testUser.findOne({username: mockUser.username});
         expect(findUser.username).toBe(mockUser.username);
@@ -61,3 +51,6 @@ describe('Find query', () => {
         expect(findUser.email).toBe(mockUser.email);
     })
 })
+
+
+
