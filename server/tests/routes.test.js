@@ -37,7 +37,7 @@ describe('POST /register', () => {
     it('try duplicate insert', async () => {
         let res = await request(app).post('/register').send({ newUser: mockUser })
         expect(res.statusCode).toBe(200)
-        expect(res.body.message).toBe("User already exists")
+        expect(res.body.message).toBe("User already registered")
     })
 })
 
@@ -96,7 +96,7 @@ describe('POST /profile', () => {
             }
         })
         expect(res.statusCode).toBe(200)
-        expect(res.body.message).toBe("User updated successfully!")
+        expect(res.body.message).toBe("User profile updated successfully!")
     })
 })
 
@@ -160,7 +160,7 @@ describe('DELETE /register', () => {
     it('delete temp user', async () => {
         let res = await request(app).delete('/register').send(mockUser)
         expect(res.statusCode).toBe(200)
-        expect(res.body.message).toBe("User deleted")
+        expect(res.body.message).toBe("User successfully deleted")
     })
 
     it('delete invalid user', async () => {
