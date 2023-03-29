@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {UserContext} from '../App';
+import './styles.css'
 
 function Login() {
 
@@ -44,41 +45,36 @@ function Login() {
     };
     
     return (
-        <form onSubmit={onSubmit} style={{
-            height: "300px",
-            width: "600px",
-            margin: "auto"
-        }}>
-            <div className="container" style={{
-                position: "relative",
-                height: "200px",
-                width: "500px",
-                textAlign: "left"
+        <div className='body'>
+            <form onSubmit={onSubmit} style={{
+                height: 'auto',
+                width: 'auto',
+                margin: 'auto'
             }}>
-                <h2>Login:</h2>
-                <div className="username">                        
-                    <input type="text" name="username" value={creds.username} placeholder="Username" onChange={update} style={{
-                        width: "100%"
-                    }}/>                      
-                </div>
-                <br />
-                <div className="password">                      
-                    <input type="password" name="password" value={creds.password} placeholder="Password" onChange={update} style={{
-                        width: "100%"
-                    }}/>
-                </div>
-                <div className="submit" style={{
-                    position: "relative"
+                <div className="container" style={{
+                    position: "aboslute",
+                    height: "auto",
+                    width: "500px",
+                    textAlign: "left"
                 }}>
-                    <button type="submit" style={{
-                        marginTop: "30px",
-                        float: "right",
-                        display: "inline-block",
-                        width: "100%"
-                    }}>Submit</button>
+                    <h2 className='form-title'>Login:</h2>
+                    <div> 
+                        <div className="input-label">
+                            <label>Username</label>    
+                        </div>                       
+                        <input type="text" className="text-box" id='text-box' name="username" value={creds.username} placeholder="Username" onChange={update}/>                      
+                    </div>
+                    <br />
+                    <div>
+                        <div className="input-label">
+                            <label>Password</label>
+                        </div>                   
+                        <input type="password" className="text-box" id='text-box' name="password" value={creds.password} placeholder="Password" onChange={update}/>
+                    </div>
+                    <button type="submit" className="submit-button">Submit</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     )
 }
 

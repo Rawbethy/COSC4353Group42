@@ -16,11 +16,9 @@ export default function NavigationBar() {
             <div class="app">
                 <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
                 <Navbar.Brand>
-                    <NavLink href="/" classname="homebutton">
-                        <a href="/" className="logo">
-                            <img style={{ width: 50, height: 50 }}className="logo" src={logo} alt=""/>
-                            </a>
-                                </NavLink>
+                    <NavLink href="/" className="logo">
+                        <img style={{ width: 50, height: 50 }} className="logo" src={logo} alt=""/>
+                    </NavLink>
                 </Navbar.Brand>
     
                 <Navbar.Toggle />
@@ -44,7 +42,9 @@ export default function NavigationBar() {
             <div class="app">
                 <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
                 <Navbar.Brand>
-                    <Nav.Link href='/'>MyReactApp</Nav.Link>
+                    <NavLink href="/" className="logo">
+                        <img style={{ width: 50, height: 50 }} className="logo" src={logo} alt=""/>
+                    </NavLink>
                 </Navbar.Brand>
     
                 <Navbar.Toggle />

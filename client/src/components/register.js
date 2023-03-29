@@ -44,49 +44,49 @@ export default function Register() {
     }
 
     return (
-        <form onSubmit={onSubmit} style={{
-            height: "300px",
-            width: "600px",
-            margin: "auto"
-        }}>
-            <div className="container" style={{
-                position: "relative",
-                height: "200px",
-                width: "500px",
-                textAlign: "left"
+        <div className="body">
+            <form onSubmit={onSubmit} style={{
+                height: 'auto',
+                width: 'auto',
+                margin: 'auto'
             }}>
-                <h2>Register:</h2>
-                <div className="email"> 
-                    <label>Email:</label>                       
-                    <input type="text" placeholder="Enter Email" value={email} onChange={onChangeEmail} autoComplete="off" style={{
-                        width: "100%"
-                    }}/>                      
-                </div>
-                <br />
-                <div className="username"> 
-                    <label>Username:</label>                    
-                    <input type="text" placeholder="Enter Username" value={username} onChange={onChangeUsername} autoComplete="off" style={{
-                        width: "100%"
-                    }}/>
-                </div>
-                <br />
-                <label>Password:</label>
-                <div className="password">
-                    <input type="password" placeholder="Enter Password" value={password} onChange={onChangePassword} autoComplete="off" style={{
-                        width: "100%"
-                    }}/>
-                </div>
-                <div className="submit" style={{
-                    position: "relative"
+                <div className="container" style={{
+                    position: "aboslute",
+                    height: "auto",
+                    width: "auto",
+                    textAlign: "left"
                 }}>
-                    <button type="submit" onClick={onSubmit} style={{
-                        marginTop: "30px",
-                        float: "right",
-                        display: "inline-block",
-                        width: "100%"
-                    }}>Submit</button>
+                    <h2 className='form-title'>Register</h2>
+                    <div>  
+                        <div className='input-label'>
+                            <label>Email</label>    
+                        </div>                      
+                        <input type="text" className='text-box' id='text-box' placeholder="Enter Email" value={email} onChange={onChangeEmail} autoComplete="off" style={{
+                            width: "100%"
+                        }}/>                      
+                    </div>
+                    <br />
+                    <div>
+                        <div className="input-label">
+                            <label>Username</label>    
+                        </div>               
+                        <input type="text" className='text-box' id='text-box' placeholder="Enter Username" value={username} onChange={onChangeUsername} autoComplete="off" style={{
+                            width: "100%"
+                        }}/>
+                    </div>
+                    <br />
+                    <div>
+                        <div className="input-label">
+                            <label>Password</label>
+                        </div>
+                        <input type="password" className='text-box' id='text-box' placeholder="Enter Password" value={password} onChange={onChangePassword} autoComplete="off" style={{
+                            width: "100%"
+                        }}/>
+                    </div>
+                    <button type="submit" className='submit-button'>Submit</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
     )
 }

@@ -1,0 +1,50 @@
+.body {
+    position: absolute;
+    top: 5.9%;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: black;
+}
+
+.text-main {
+    color: white;
+    font-size: xx-large;
+}
+
+.form-title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    font-size: xx-large
+}
+
+.text-box {
+    opacity: .9;
+    border-width: 0px;
+    width: 100%
+}
+
+.input-label {
+    color: white;
+    font-size: large;
+}
+
+#text-box::placeholder {
+    color: black;
+}
+
+.submit-button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    margin: 25px auto;
+    border-width: 0px;
+    align-self: center;
+    background-color: whitesmoke;
+}
+
+input:focus, select:focus, textarea:focus, button:focus {
+    outline: none
+}
