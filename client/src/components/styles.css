@@ -11,6 +11,18 @@
     color: white;
     font-size: xx-large;
 }
+.form {
+    height: auto;
+    width: auto;
+    margin: auto
+}
+
+.form-styling {
+    position: absolute;
+    height: auto;
+    width: 500px;
+    text-align: left;
+}
 
 .form-title {
     padding-top: 10px;
