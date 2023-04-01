@@ -26,6 +26,18 @@
     width: 500px;
     text-align: left;
 }
+.form {
+    height: auto;
+    width: auto;
+    margin: auto
+}
+
+.form-styling {
+    position: absolute;
+    height: auto;
+    width: 500px;
+    text-align: left;
+}
 
 .form-title {
     padding-top: 40px;
