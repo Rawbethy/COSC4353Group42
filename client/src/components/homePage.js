@@ -9,7 +9,7 @@ export default function Homepage() {
     if((loginStatus === 'true') || (loginStatus === true)) {
         return (
             <div className='body'>
-                <div className="text" style={{position: 'absolute', top: '5%', left: '3%'}}>
+                <div>
                     <h2 className='text-main'>Welcome back {username}!</h2>
                 </div>
             </div>
@@ -18,7 +18,7 @@ export default function Homepage() {
     else {
         return (
             <div className='body'>
-                <div className="text" style={{position: 'absolute', top: '5%', left: '3%'}}>
+                <div>
                     <h2 className='text-main'>This is the home page component!</h2>
                 </div>
             </div>
