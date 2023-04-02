@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const validateRegister = require('../middleware/validateRegister');
 let User = require('../models/user');
 
-router.route('/').post((req, res) => {
+router.route('/').post(validateRegister, (req, res) => {
     const user = req.body.newUser
     User.findOne({username: user.username}).then((result) => {
         if(result == null) {

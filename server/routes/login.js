@@ -1,8 +1,11 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
+
+const validateLogin = require('../middleware/validateLogin');
+
 let User = require('../models/user');
 
-router.route('/').post(async(req, res) => {
+router.route('/').post(validateLogin, async(req, res) => {
     const cred = req.body.credentials;
 
     const user = await User.findOne({username: cred.username});

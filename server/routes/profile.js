@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const validateProfile = require('../middleware/validateProfile');
+
 let ProfileInfo = require('../models/profileInfo');
 
 router.route('/').get(async (req, res) => {
@@ -11,7 +13,7 @@ router.route('/').get(async (req, res) => {
     res.json({message: 'Profile not found'})
 })
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(validateProfile, async (req, res) => {
     const profileInfo = req.body.values;
     let profile = await ProfileInfo.findOne({username: profileInfo.username})
 

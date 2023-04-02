@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const validateQuote = require('../middleware/validateQuote');
 let Quotes = require('../models/quotes');
 
 router.route('/').get(async(req, res) => {
@@ -12,7 +13,7 @@ router.route('/').get(async(req, res) => {
     }
 })
 
-router.route('/').post(async(req,res) => {
+router.route('/').post(validateQuote, async(req,res) => {
     const quote = req.body.values; 
     await Quotes.findOne({username: quote.username}).then(async(res1) => {
         if(!res1) {
