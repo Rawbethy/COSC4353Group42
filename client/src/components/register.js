@@ -53,7 +53,7 @@ export default function Register() {
                 <div className="container" style={{
                     position: "aboslute",
                     height: "auto",
-                    width: "auto",
+                    width: "500px",
                     textAlign: "left"
                 }}>
                     <h2 className='form-title'>Register</h2>
