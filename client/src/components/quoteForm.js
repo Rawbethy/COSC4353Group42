@@ -65,64 +65,54 @@ export default function QuoteForm() {
     }, [values])
 
     return (
-        <form onSubmit={submitQuoteForm} style={{
-            height: "300px",
-            width: "600px",
-            margin: "auto" }}>
-            <div className="container" style={{
-                position: "relative",
-                height: "200px",
-                width: "500px",
-                textAlign: "left" }}>
-        
-            <h2>Fuel Quote Form:</h2>
-                <div className="address"> 
-                    <label>Delivery Address:</label>                       
-                    <input type="text" name="address" placeholder="Enter Address" autoComplete="off" onChange={updateField} style={{ width: "100%" }}/>  
-                    {errors.address && <span style={{"color": "red"}}>{errors.address}</span>}                    
-                </div>
-                <br />
-        
-                <div className="deliverydate"> 
-                    <label>Devliery Date:</label>                    
-                    <input type="date" name='deliveryDate' onChange={updateField} required/>
-                </div>
-                <br />
-        
-                <label>Gallons Requested:</label>
-                <div className="gallonsReq">
-                    <input type="number" name="gallonsReq" placeholder="ex. 1, 10.5" autoComplete="off" min="0" step="any" onChange={updateField} required style={{width: "100%"}}/>
-                    {errors.gallonsReq && <span style={{"color": "red"}}>{errors.gallonsReq}</span>}
-                </div>
-                <hr style={{borderTop: '5px solid black'}}/>
-        
-                <div className="pricePerGallon">
-                    <div className="label">
-                        Suggested Price / Gallon:
+        <div className="body">
+            <form onSubmit={submitQuoteForm} style={{
+                height: "300px",
+                width: "600px",
+                margin: "auto" }}>
+                <div className="form-styling">
+                    <h2 className='form-title'>Fuel Quote Form:</h2>
+                    <div> 
+                        <label className='input-label'>Delivery Address:</label>                       
+                        <input type="text" name="address" placeholder="Enter Address" autoComplete="off" onChange={updateField} style={{ width: "100%" }}/>  
+                        {errors.address && <span style={{"color": "red"}}>{errors.address}</span>}                    
                     </div>
-                    <div className="value">
-                        {values.pricePerGallon}
+                    <br />
+            
+                    <div className="deliverydate"> 
+                        <label className='input-label'>Devliery Date:</label>                    
+                        <input type="date" name='deliveryDate' onChange={updateField} required/>
                     </div>
-                </div>
-        
-                <div className="total">
-                    <div className="label">
-                        Total Amount Due:
+                    <br />
+            
+                    <label className='input-label'>Gallons Requested:</label>
+                    <div className="gallonsReq">
+                        <input type="number" name="gallonsReq" placeholder="ex. 1, 10.5" autoComplete="off" min="0" step="any" onChange={updateField} required style={{width: "100%"}}/>
+                        {errors.gallonsReq && <span style={{"color": "red"}}>{errors.gallonsReq}</span>}
                     </div>
-                    <div className="value">
-                        {values.total}
+                    <hr style={{borderTop: '5px solid white'}}/>
+            
+                    <div>
+                        <div className="input-label">
+                            Suggested Price / Gallon:
+                        </div>
+                        <div className="input-label">
+                            {values.pricePerGallon}
+                        </div>
                     </div>
+            
+                    <div>
+                        <div className="input-label">
+                            Total Amount Due:
+                        </div>
+                        <div className="input-label">
+                            {values.total}
+                        </div>
+                    </div>
+            
+                    <button style={{ marginTop: '20px' }}type="submit" className="btn btn-primary">Submit</button>
                 </div>
-        
-                <div className="submit" style={{position: "relative"}}>
-                <button type="submit"  
-                style={{
-                    marginTop: "30px",
-                    float: "right",
-                    display: "inline-block",
-                    width: "100%"}}>Submit Request</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     )
 }

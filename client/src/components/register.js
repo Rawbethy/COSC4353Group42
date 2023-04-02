@@ -50,12 +50,7 @@ export default function Register() {
                 width: 'auto',
                 margin: 'auto'
             }}>
-                <div className="container" style={{
-                    position: "aboslute",
-                    height: "auto",
-                    width: "500px",
-                    textAlign: "left"
-                }}>
+                <div className='form-styling'>
                     <h2 className='form-title'>Register</h2>
                     <div>  
                         <div className='input-label'>

@@ -9,8 +9,6 @@ router.route('/').get(async (req, res) => {
         res.json(result);
         return
     }
-
-    res.json({message: 'Profile not found'})
 })
 
 router.route('/').post(validateProfile, async (req, res) => {

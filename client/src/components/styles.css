@@ -21,8 +21,8 @@
 }
 
 .form-styling {
-    position: absolute;
-    height: auto;
+    margin-right: auto;
+    margin-left: auto;
     width: 500px;
     text-align: left;
 }
@@ -47,12 +47,20 @@
 }
 
 .text-box {
-    border-width: 0px;
+    display: block;
     width: 100%
 }
 
-.text-disabled {
-    opacity: .2;
+.text-box-50 {
+    width: 50%
+}
+
+.text-box-35 {
+    width: 35%
+}
+
+.text-box-25 {
+    width: 25%
 }
 
 .input-label {

@@ -84,7 +84,6 @@ export default function Profile() {
         if(JSON.stringify(errors) === '{}') {
             axios.post('http://localhost:5000/profile', {values})
             .then((res) => {
-                navigate('/');
                 alert(res.data.message);
             })
             .catch(err => {
@@ -117,42 +116,44 @@ export default function Profile() {
         <div className="body">
             <form className='form' onSubmit={submitForm} style={{
                 height: 'auto',
+                width: 'auto',
+                margin: 'auto'
             }}>
                 <div className="form-styling">
                     <h2 className='form-title'>Edit Profile:</h2>
-                    <div className="form-group col-md-6">        
+                    <div>        
                         <label className='input-label'>Full Name</label>
                         <input type="text" className='text-box' id='text-box' name="fullName" placeholder="John Doe" value={values.fullName} onChange={updateField} required/>
                         {errors.fullName && <span style={{"color": "red"}}>{errors.fullName}</span>}
                     </div>
 
-                    <div className="form-group col-md-6">        
+                    <div>        
                         <label className='input-label'>Username</label>
-                        <input type="text" className='text-disabled' id='text-box' name="username" placeholder={username} value={values.username} onChange={updateField} disabled />
+                        <input type="text" className='text-box text-disabled' id='text-box' name="username" placeholder={username} value={values.username} onChange={updateField} disabled />
                     </div>
 
-                    <div className="form-group col-md-6">
+                    <div>
                         <label className='input-label'>Address 1</label>
                         <input type="text" className='text-box' name="address1" placeholder="1234 Main St" value={values.address1} onChange={updateField} required/>
                         {errors.address1 && <span style={{"color": "red"}}>{errors.address1}</span>}
                     </div>
 
-                    <div className="form-group col-md-6">
+                    <div>
                         <label className='input-label'>Address 2</label>
-                        <input type="text" className='text-box' name="address2" placeholder="Apartment, studio, or floor" value={values.address2} onChange={updateField} />
+                        <input type="text" className='text-box-50 text-box' name="address2" placeholder="Apartment, studio, or floor" value={values.address2} onChange={updateField} />
                     </div>
 
                     <div className="form-row">
 
-                        <div className="form-group col-md-6">
+                        <div>
                             <label className='input-label'>City</label>
-                            <input type="text" className='text-box' name="city" value={values.city} onChange={updateField} required/>
+                            <input type="text" className='text-box-50 text-box' name="city" value={values.city} onChange={updateField} required/>
                             {errors.city && <span style={{"color": "red"}}>{errors.city}</span>}
                         </div>
 
-                        <div className="form-group col-md-4">
+                        <div>
                             <label className='input-label'>State</label>
-                            <select id="inputState" className='text-box' name="state" value={values.state} onChange={updateField}>
+                            <select id="inputState" className='text-box-35 text-box' name="state" value={values.state} onChange={updateField}>
                                     {
                                         Object.entries(states).map(([key,value]) => {
                                             return <option key={key} value={key}>{value}</option>
@@ -161,26 +162,26 @@ export default function Profile() {
                             </select>
                         </div>
 
-                        <div className="form-group col-md-4">    
+                        <div >    
                             <label className='input-label'>Zip</label>
-                            <input type="text" className='text-box' name="zip" value={values.zip} onChange={updateField} required/>
+                            <input type="text" className='text-box-25 text-box' name="zip" value={values.zip} onChange={updateField} required/>
                             {errors.zip && <div style={{"color": "red"}}>{errors.zip}</div>}
                         </div>
                     </div>
 
-                    <div className="form-group col-md-4">
+                    <div>
                         <label className='input-label'>Phone</label>
-                        <input type="text" className='text-box' name="phone" value={values.phone} onChange={updateField} required/>
+                        <input type="text" className='text-box-50 text-box' name="phone" value={values.phone} onChange={updateField} required/>
                         {errors.phone && <span style={{"color": "red"}}>{errors.phone}</span>}
                     </div>
 
-                    <div className="form-group col-md-7">
+                    <div>
                         <label className='input-label'>Email</label>
                         <input type="text" className='text-box' name="email" value={values.email} onChange={updateField} required/>
                         {errors.email && <div style={{"color": "red"}}>{errors.email}</div>}
                     </div>
 
-                    <button style={{ marginTop: '5px' }}type="submit" className="btn btn-primary">Submit</button>
+                    <button style={{ marginTop: '20px' }}type="submit" className="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>

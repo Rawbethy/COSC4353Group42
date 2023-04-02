@@ -46,17 +46,8 @@ function Login() {
     
     return (
         <div className='body'>
-            <form onSubmit={onSubmit} style={{
-                height: 'auto',
-                width: 'auto',
-                margin: 'auto'
-            }}>
-                <div className="container" style={{
-                    position: "aboslute",
-                    height: "auto",
-                    width: "500px",
-                    textAlign: "left"
-                }}>
+            <form onSubmit={onSubmit}>
+                <div className='form-styling'>
                     <h2 className='form-title'>Login:</h2>
                     <div> 
                         <div className="input-label">
