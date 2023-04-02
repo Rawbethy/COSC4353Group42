@@ -9,7 +9,10 @@ const registerRouter = require('./routes/register')
 const profileRouter = require('./routes/profile');
 const quotesRouter = require('./routes/quotes');
 
+
 require('dotenv').config();
+
+
 
 app.use(express.json());
 app.use(cors());
