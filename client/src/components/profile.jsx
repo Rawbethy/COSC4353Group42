@@ -181,7 +181,7 @@ export default function Profile() {
                         {errors.email && <div style={{"color": "red"}}>{errors.email}</div>}
                     </div>
 
-                    <button style={{ marginTop: '20px' }}type="submit" className="btn btn-primary">Submit</button>
+                    <button style={{ marginTop: '20px' }} type="submit" className="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
