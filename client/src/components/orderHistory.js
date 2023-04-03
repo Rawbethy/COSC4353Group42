@@ -85,10 +85,10 @@ export default function OrderHistory() {
   }, []);
 
   return (
-    <div className="main">
+    <div className="body">
 
-      <div className="reset" style = {{float: 'right'}}>
-        <button type='button' class='btn btn-link' onClick={() => window.location.reload(false)}>
+      <div>
+        <button style={{ float: 'right', marginTop: '20px' }}type="submit" className="btn btn-primary" onClick={() => window.location.reload(false)}>
           Reset Filters
         </button>
       </div>
@@ -98,27 +98,27 @@ export default function OrderHistory() {
           <thead>
             <tr>
               <th>
-                <div className="index" style={{paddingBottom: '7.5px'}}>
+                <div className='input-label' style={{paddingBottom: '7.5px'}}>
                   Index
                 </div>
               </th>
               <th>
-                <button type='button' class='btn btn-link' onClick={() => sortKey('Date')}>
+                <button type='button' class='btn btn-link' style={{color: 'white'}} onClick={() => sortKey('Date')}>
                   Delivery Date
                 </button>
               </th>
               <th>
-                <button type='button' class='btn btn-link' onClick={() => sortKey('Gallons')}>
+                <button type='button' class='btn btn-link' style={{color: 'white'}} onClick={() => sortKey('Gallons')}>
                   Gallons Requested
                 </button>
               </th>
               <th>
-                <button type='button' class='btn btn-link' onClick={() => sortKey('Price/Gal')}>
+                <button type='button' class='btn btn-link' style={{color: 'white'}} onClick={() => sortKey('Price/Gal')}>
                   Price/Gal
                 </button>
               </th>
               <th>
-                <button type='button' class='btn btn-link' onClick={() => sortKey('Total')}>
+                <button type='button' class='btn btn-link' style={{color: 'white'}} onClick={() => sortKey('Total')}>
                   Total
                 </button>
               </th>
@@ -129,11 +129,11 @@ export default function OrderHistory() {
               orders.sort(changeSort()).map((quote, index) => {
                 return (
                   <tr>
-                    <td>{index}</td>
-                    <td>{quote.deliveryDate.substring(0,10)}</td>
-                    <td>{quote.gallonsReq}</td>
-                    <td>{quote.pricePerGallon}</td>
-                    <td>{quote.total}</td>
+                    <td className='input-label'>{index}</td>
+                    <td className='input-label'>{quote.deliveryDate.substring(0,10)}</td>
+                    <td className='input-label'>{quote.gallonsReq}</td>
+                    <td className='input-label'>{quote.pricePerGallon}</td>
+                    <td className='input-label'>{quote.total}</td>
                   </tr>
                 )
               })

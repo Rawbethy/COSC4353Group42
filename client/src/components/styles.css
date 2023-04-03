@@ -66,6 +66,7 @@
 .input-label {
     color: white;
     font-size: large;
+    padding-right: 15px;
 }
 
 #text-box::placeholder {
