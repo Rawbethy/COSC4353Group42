@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     }
     if(profileInfo.state.length != 2) 
     {
-        res.status(400).json({error: 'State must be 2 characters'});
+        res.status(400).json({error: 'State must be exactly 2 characters'});
         return;
     }
     if(profileInfo.zip.length < 5) {
