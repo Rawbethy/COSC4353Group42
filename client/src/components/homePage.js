@@ -9,7 +9,7 @@ export default function Homepage() {
     if((loginStatus === 'true') || (loginStatus === true)) {
         return (
             <div className='body'>
-                <div>
+                <div className='text-main-container'>
                     <h2 className='text-main'>Welcome back {username}!</h2>
                 </div>
             </div>
@@ -18,8 +18,9 @@ export default function Homepage() {
     else {
         return (
             <div className='body'>
-                <div>
-                    <h2 className='text-main'>This is the home page component!</h2>
+                <div className='text-main-container'>
+                    <h2 className='text-main'>Welcome to Feul Depot!</h2>
+                    <p className='input-label' style={{fontSize: '20px'}}>Providing a sustainable source of petroleum to your local <br />fueling business since 1400 B.C.</p>
                 </div>
             </div>
         )

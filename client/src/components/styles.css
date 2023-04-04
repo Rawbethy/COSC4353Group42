@@ -7,13 +7,17 @@
     background-color: black;
 }
 
-.text-main {
-    color: white;
-    font-size: xx-large;
+.text-main-container {
     position: absolute;
-    margin-top: 5%;
+    margin-top: 3%;
     margin-left: 3%;
 }
+
+.text-main {
+    color: white;
+    font-size: 3em;
+}
+
 .form {
     height: auto;
     width: auto;
@@ -57,10 +61,6 @@
     padding-right: 15px;
 }
 
-#text-box::placeholder {
-    color: black;
-}
-
 .submit-button {
     position: relative;
     display: flex;
@@ -70,6 +70,10 @@
     border-width: 0px;
     align-self: center;
     background-color: whitesmoke;
+}
+
+#text-box::placeholder {
+    color: black;
 }
 
 input:focus, select:focus, textarea:focus, button:focus {
