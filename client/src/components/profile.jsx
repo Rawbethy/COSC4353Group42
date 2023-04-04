@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {UserContext} from '../App';
-import { isAccordionItemSelected } from 'react-bootstrap/esm/AccordionContext';
 const states = require('../Utils/states')
 
 export function Validate(values) {
@@ -54,7 +52,6 @@ export function Validate(values) {
 
 export default function Profile() {
 
-    const navigate = useNavigate();
     const {username} = useContext(UserContext);
     const [errors, setErrors] = useState({});
     const initialState = {
@@ -150,7 +147,6 @@ export default function Profile() {
                             <input type="text" className='text-box-50 text-box' name="city" value={values.city} onChange={updateField} required/>
                             {errors.city && <span style={{"color": "red"}}>{errors.city}</span>}
                         </div>
-
                         <div>
                             <label className='input-label'>State</label>
                             <select id="inputState" className='text-box-35 text-box' name="state" value={values.state} onChange={updateField}>

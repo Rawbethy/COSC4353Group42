@@ -2,23 +2,21 @@ const router = require('express').Router();
 const validateRegister = require('../middleware/validateRegister');
 let User = require('../models/user');
 
-router.route('/').post(validateRegister, (req, res) => {
+router.route('/').post(validateRegister, async (req, res) => {
     const user = req.body.newUser
-    User.findOne({username: user.username}).then((result) => {
-        if(result == null) {
-            const newUser = new User({
-                email: user.email,
-                username: user.username,
-                password: user.password
-            });
-            newUser.save().then(() => res.json({message: 'Registration Complete!'}))
-            .catch(err => res.json(err))
-        }
-        else {
-            res.json({message: 'User already registered'})
-        }
-    })
-
+    let result = await User.findOne({username: user.username})
+    if(result == null) {
+        const newUser = new User({
+            email: user.email,
+            username: user.username,
+            password: user.password
+        });
+        await newUser.save();
+        res.json({message: 'Registration Complete!'})
+    }
+    else {
+        res.json({message: 'User already registered'})
+    }
 })
 router.route('/').delete((req, res) => {
     const user = req.body
