@@ -38,7 +38,12 @@ export default function Register() {
                 password: values.password
             }
             axios.post("http://localhost:5000/register", {newUser}).then((res) => {
-                alert(res.data.message);
+                if(res.data.message === 'Registration Complete!') {
+                    navigate('/login')
+                }
+                else {
+                    alert(res.data.message);
+                }
             }).catch((err) => {
                 alert(err);
             })

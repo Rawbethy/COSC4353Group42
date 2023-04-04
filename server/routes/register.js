@@ -4,7 +4,7 @@ let User = require('../models/user');
 
 router.route('/').post(validateRegister, async (req, res) => {
     const user = req.body.newUser
-    let result = await User.findOne({username: user.username})
+    let result = await User.findOne({ $or: [ {username: user.username}, {email: user.email}]})
     if(result == null) {
         const newUser = new User({
             email: user.email,
@@ -15,7 +15,12 @@ router.route('/').post(validateRegister, async (req, res) => {
         res.json({message: 'Registration Complete!'})
     }
     else {
-        res.json({message: 'User already registered'})
+        if(result.username === user.username && result.email !== user.email) {
+            res.json({message: 'Username already taken'})
+        }
+        if(result.email === user.email && result.username !== user.username) {
+            res.json({message: 'Email is already registered'})
+        }
     }
 })
 router.route('/').delete((req, res) => {
