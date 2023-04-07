@@ -12,6 +12,18 @@ const mockUser = {
     password: 'aWorkingPassword966@'
 }
 
+const mockUserEmail = {
+    email: 'testuser233@gmailx.com',
+    username: 'testuser123',
+    password: 'aWorkingPassword966@'
+}
+
+const mockUserUsername = {
+    email: 'testuser123@gmailx.com',
+    username: 'testuser233',
+    password: 'aWorkingPassword966@'    
+}
+
 
 beforeAll(async () => {
     await Profile.deleteOne({ username: mockUser.username })
@@ -34,10 +46,16 @@ describe('POST /register', () => {
         expect(res.body.message).toBe("Registration Complete!")
     })
 
-    it('try duplicate insert', async () => {
-        let res = await request(app).post('/register').send({ newUser: mockUser })
+    it('try duplicate for email', async () => {
+        let res = await request(app).post('/register').send({ newUser: mockUserEmail })
         expect(res.statusCode).toBe(200)
-        expect(res.body.message).toBe("User already registered")
+        expect(res.body.message).toBe("Email is already registered")
+    })
+
+    it('try duplicate for username', async() => {
+        let res = await request(app).post('/register').send({ newUser: mockUserUsername })
+        expect(res.statusCode).toBe(200)
+        expect(res.body.message).toBe("Username already taken")
     })
 })
 

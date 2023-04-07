@@ -18,7 +18,7 @@ router.route('/').post(validateRegister, async (req, res) => {
         if(result.username === user.username && result.email !== user.email) {
             res.json({message: 'Username already taken'})
         }
-        if(result.email === user.email && result.username !== user.username) {
+        else if(result.email === user.email && result.username !== user.username) {
             res.json({message: 'Email is already registered'})
         }
     }
