@@ -73,7 +73,6 @@ export default function Profile() {
             ...values,
             [e.target.name]: e.target.value
         }));
-        setErrors(Validate(values));
     }
 
     const submitForm = (e) => {

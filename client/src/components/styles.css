@@ -55,6 +55,19 @@
     width: 25%
 }
 
+.first-button {
+    margin-right: 10px;
+}
+
+.middle-button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.last-button {
+    margin-left: 10px;
+}
+
 .input-label {
     color: white;
     font-size: large;

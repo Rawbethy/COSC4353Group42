@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {UserContext} from '../App';
@@ -37,6 +37,8 @@ export default function QuoteForm() {
         pricePerGallon: 0,
         total: 0
     });
+    const [getButton, setGetButton] = useState(false);
+    const [submitButton, setSubmitButton] = useState(false);
     const [errors, setErrors] = useState({});
 
     const updateField = (e) => {
@@ -45,6 +47,16 @@ export default function QuoteForm() {
             ...values,
             [e.target.name]: e.target.value
         }));
+    }
+
+    const getQuote = (e) => {
+        e.preventDefault();
+        setValues((values) => ({
+            ...values,
+            pricePerGallon: 69,
+            total: 420
+        }));
+        console.log(values)
     }
 
     const submitQuoteForm = async(e) => {
@@ -62,11 +74,21 @@ export default function QuoteForm() {
 
     useEffect(() => {
         setValues(values);
+        if(values['gallonsReq'] !== '' && values['deliveryDate'] !== '' && values['address'] !== '') {
+            setGetButton(true)
+            if(values['pricePerGallons'] !== 0 && values['total'] !== 0) {
+                setSubmitButton(true)
+            }
+        }
+        else {
+            setGetButton(false)
+            setSubmitButton(false)
+        }
     }, [values])
 
     return (
         <div className="body">
-            <form onSubmit={submitQuoteForm} style={{
+            <form style={{
                 height: "300px",
                 width: "600px",
                 margin: "auto" }}>
@@ -109,8 +131,11 @@ export default function QuoteForm() {
                             {values.total}
                         </div>
                     </div>
+                    <div>
+                        <button style={{ marginTop: '20px' }}type="submit" className="btn btn-primary first-button" onClick={getQuote} disabled={!getButton}>Get Quote</button>
+                        <button style={{ marginTop: '20px' }}type="submit" className="btn btn-primary last-button" onClick={submitQuoteForm} disabled={!submitButton}>Submit Quote</button>
+                    </div>
             
-                    <button style={{ marginTop: '20px' }}type="submit" className="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
