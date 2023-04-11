@@ -1,21 +1,17 @@
-import React, {useState, useEffect, useContext, useCallback} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {UserContext} from '../App';
+import PricingModule from '../Utils/pricingModule';
 
-export function toNumeric(values, setValues) {
+export function checkGallons(values, setValues) {
     let errors = {};
 
     for(const item in values) {
         switch(item) {
             case 'gallonsReq':
-                let num = Number(values[item]);
-                setValues((values) => ({
-                    ...values,
-                    gallonsReq: num
-                 }));
                  if(values[item] < 0) {
-                    errors.gallonReq = 'Needs to be a numeric amount of gallons'
+                    errors.gallonsReq = 'Needs to be a numeric amount of gallons'
                  }
                 break;   
             default:
@@ -33,10 +29,18 @@ export default function QuoteForm() {
         username: username,
         address: '',
         deliveryDate: '',
-        gallonsReq: '',
+        gallonsReq: 0,
         pricePerGallon: 0,
         total: 0
     });
+    const [currGallonsReq, setCurrGallons] = useState(0);
+    let priceClass = new PricingModule(values['gallonsReq']);
+    const [classValues, setClassValues] = useState({
+        location: .04,
+        history: 0,
+        above: .03,
+        companyProfit: .1
+    })
     const [getButton, setGetButton] = useState(false);
     const [submitButton, setSubmitButton] = useState(false);
     const [errors, setErrors] = useState({});
@@ -49,19 +53,45 @@ export default function QuoteForm() {
         }));
     }
 
-    const getQuote = (e) => {
+    const getQuote = async(e) => {
+        setCurrGallons(values.gallonsReq)
+        setErrors(checkGallons(values, setValues));
         e.preventDefault();
-        setValues((values) => ({
-            ...values,
-            pricePerGallon: 69,
-            total: 420
-        }));
-        console.log(values)
+        if(values.gallonsReq >= 0) {
+            await axios.get('http://localhost:5000/quotes', {params: {username: username}}).then((res) => {
+                if(res.data.noQuotes !== true) {
+                    classValues.history = .01;
+                }
+                else {
+                    classValues.history = 0;
+                }
+            })
+            await axios.get('http://localhost:5000/profile', {params: {username: username}}).then((res) => {
+                if(res.data.state === 'TX') {
+                    classValues.location = .02;
+                }
+                else {
+                    classValues.location = .04
+                }
+            })
+            if(values.gallonsReq >= 1000) {
+                classValues.above = .02;
+            }
+            else {
+                classValues.above = .03;
+            }
+            priceClass.update(values.gallonsReq, classValues.location, classValues.history, classValues.above);
+            priceClass.calc()
+            setValues((values) => ({
+                ...values,
+                pricePerGallon: priceClass.getPricePerGallon(),
+                total: priceClass.getTotal()
+            }));
+        }
     }
 
     const submitQuoteForm = async(e) => {
         e.preventDefault();
-        setErrors(toNumeric(values, setValues));
         await axios.post('http://localhost:5000/quotes', {values})
         .then((res) => {
             alert(res.data.message);
@@ -74,6 +104,7 @@ export default function QuoteForm() {
 
     useEffect(() => {
         setValues(values);
+        setClassValues(classValues);
         if(values['gallonsReq'] !== '' && values['deliveryDate'] !== '' && values['address'] !== '') {
             setGetButton(true)
             if(values['pricePerGallons'] !== 0 && values['total'] !== 0) {
@@ -84,7 +115,7 @@ export default function QuoteForm() {
             setGetButton(false)
             setSubmitButton(false)
         }
-    }, [values])
+    }, [values, classValues])
 
     return (
         <div className="body">
@@ -113,12 +144,16 @@ export default function QuoteForm() {
                         {errors.gallonsReq && <span style={{"color": "red"}}>{errors.gallonsReq}</span>}
                     </div>
                     <hr style={{borderTop: '5px solid white'}}/>
+                    
+                    <div className="input-label">
+                            <h4>Estimated Quote for {currGallonsReq ? currGallonsReq : 0} Gallon(s):</h4>
+                    </div>
             
                     <div>
-                        <div className="input-label">
+                        <div className='input-label'>
                             Suggested Price / Gallon:
                         </div>
-                        <div className="input-label">
+                        <div className='input-label'>
                             {values.pricePerGallon}
                         </div>
                     </div>
