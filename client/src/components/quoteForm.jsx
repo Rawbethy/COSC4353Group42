@@ -2,16 +2,15 @@ import React, {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {UserContext} from '../App';
-import PricingModule from '../Utils/pricingModule';
 
-export function checkGallons(values, setValues) {
+export function checkGallons(values) {
     let errors = {};
 
     for(const item in values) {
         switch(item) {
             case 'gallonsReq':
                  if(values[item] < 0) {
-                    errors.gallonsReq = 'Needs to be a numeric amount of gallons'
+                    errors.gallonsReq = 'Needs to be a valid/positive number of gallons'
                  }
                 break;   
             default:
@@ -34,7 +33,6 @@ export default function QuoteForm() {
         total: 0
     });
     const [currGallonsReq, setCurrGallons] = useState(0);
-    let priceClass = new PricingModule(values['gallonsReq']);
     const [classValues, setClassValues] = useState({
         location: .04,
         history: 0,
@@ -55,39 +53,17 @@ export default function QuoteForm() {
 
     const getQuote = async(e) => {
         setCurrGallons(values.gallonsReq)
-        setErrors(checkGallons(values, setValues));
+        setErrors(checkGallons(values));
         e.preventDefault();
-        if(values.gallonsReq >= 0) {
-            await axios.get('http://localhost:5000/quotes', {params: {username: username}}).then((res) => {
-                if(res.data.noQuotes !== true) {
-                    classValues.history = .01;
-                }
-                else {
-                    classValues.history = 0;
-                }
-            })
-            await axios.get('http://localhost:5000/profile', {params: {username: username}}).then((res) => {
-                if(res.data.state === 'TX') {
-                    classValues.location = .02;
-                }
-                else {
-                    classValues.location = .04
-                }
-            })
-            if(values.gallonsReq >= 1000) {
-                classValues.above = .02;
-            }
-            else {
-                classValues.above = .03;
-            }
-            priceClass.update(values.gallonsReq, classValues.location, classValues.history, classValues.above);
-            priceClass.calc()
+        await axios.post('http://localhost:5000/pricing', {values}).then(res => {
             setValues((values) => ({
                 ...values,
-                pricePerGallon: priceClass.getPricePerGallon(),
-                total: priceClass.getTotal()
+                pricePerGallon: res.data.pricePerGallon,
+                total: res.data.total
             }));
-        }
+        }).catch(err => {
+            alert(err)
+        })
     }
 
     const submitQuoteForm = async(e) => {

@@ -47,4 +47,4 @@ router.route('/').post(validateQuote, async(req,res) => {
     });
 })
 
-module.exports = router
+module.exports = router;
