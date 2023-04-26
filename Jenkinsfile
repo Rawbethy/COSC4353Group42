@@ -2,9 +2,11 @@ pipeline {
   agent any
   
   stages {
-    stage('build') {
+    stage('test') {
       steps {
-        echo 'Bruh' 
+        dir('/server') {
+          sh 'npm run test' 
+        }
       } 
     }
   }
