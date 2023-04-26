@@ -1,9 +1,7 @@
 pipeline {
-    agent {
-        any { image 'node:16.13.1-alpine' }
-    }
+    agent any
     
-    tools {nodejs 'nodejs'}
+    tools {nodejs 'node'}
 
     stages {
         stage('build') {
