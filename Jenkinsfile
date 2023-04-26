@@ -4,16 +4,18 @@ pipeline {
     tools {nodejs 'Node'}
 
     stages {
-        stage('build') {
-            steps {
-                sh 'npm install'    
-            } 
-        }
-
-        stage('test') {
-            steps {
-                sh 'npm run test'    
+        dir('./server') {
+            stage('build') {
+                steps {
+                    sh 'npm install'    
+                } 
             }
+
+            stage('test') {
+                steps {
+                    sh 'npm run test'    
+                }
+            }    
         }
     }
 }
