@@ -1,13 +1,13 @@
 pipeline {
-  agent any
-  
-  stages {
-    stage('test') {
-      steps {
-        dir('./server') {
-          sh 'pwd' 
+    agent any
+
+    stages {
+        stage('build') {
+            sh 'npm install'
         }
-      } 
+
+        stage('test') {
+            sh 'npm run test'
+        }
     }
-  }
 }
