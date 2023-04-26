@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        dir('/server') {
+        dir('./server') {
           sh 'npm run test' 
         }
       } 
