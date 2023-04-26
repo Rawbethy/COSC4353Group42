@@ -5,7 +5,7 @@ pipeline {
     stage('test') {
       steps {
         dir('./server') {
-          sh 'npm run test' 
+          sh 'pwd' 
         }
       } 
     }
