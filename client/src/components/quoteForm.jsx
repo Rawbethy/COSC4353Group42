@@ -17,6 +17,8 @@ export function checkErrors(values) {
                 let date = new Date(values[item])
                 if(date < Date.now()) {
                     errors.deliveryDate = 'Delivery date cannot be in the past.'
+                } else {
+                    delete errors.deliveryDate;
                 }
                 break;
             default:
@@ -96,9 +98,18 @@ export default function QuoteForm() {
                     navigate('/profile')
                     alert('Need to update your profile before getting a quote')
                 }
+                else {
+                    setValues((values) => ({
+                        ...values,
+                        address: res.data.address1
+                    }));
+                }
             })
         }
         fetchData();
+    }, [])
+
+    useEffect(() => {
         setValues(values);
         setClassValues(classValues);
         if(values['gallonsReq'] !== '' && values['deliveryDate'] !== '' && values['address'] !== '') {
@@ -123,14 +134,14 @@ export default function QuoteForm() {
                     <h2 className='form-title'>Fuel Quote Form:</h2>
                     <div> 
                         <label className='input-label'>Delivery Address:</label>                       
-                        <input type="text" name="address" placeholder="Enter Address" autoComplete="off" onChange={updateField} style={{ width: "100%" }}/>  
+                        <input type="text" name="address" value={values.address} placeholder="Enter Address" autoComplete="off" onChange={updateField} style={{ width: "100%" }}/>  
                         {errors.address && <span style={{"color": "red"}}>{errors.address}</span>}                    
                     </div>
                     <br />
             
                     <div className="deliverydate"> 
-                        <label className='input-label'>Delivery Date:</label>                    
-                        <input type="datetime-local" name='deliveryDate' onChange={updateField} required/>
+                        <label className='input-label'>Devliery Date:</label>                    
+                        <input type="date" name='deliveryDate' onChange={updateField} required/>
                         {errors.deliveryDate && <span style={{"color": "red"}}>{errors.deliveryDate}</span>}
                     </div>
                     <br />
