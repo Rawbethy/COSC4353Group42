@@ -28,8 +28,16 @@ router.route('/').post(async(req, res) => {
     if(values.gallonsReq >= 0) {
         let quotesRes = await Quotes.findOne({username: price.username});
         let stateRes = await profileInfo.findOne({username: price.username});
-        if(quotesRes.quotes.length > 0) {
-            price.history = .01
+        if(quotesRes === null) {
+            price.history = 0
+        }
+        else {
+            if(quotesRes.quotes.length > 0) {
+                price.history = .01
+            }
+            else {
+                price.history = 0
+            }
         }
         if(stateRes.state === 'TX') {
             price.location = .02
