@@ -10,7 +10,7 @@ export default function Homepage() {
         return (
             <div className='body'>
                 <div className='text-main-container'>
-                    <h2 className='text-main'>Welcome back {username}!</h2>
+                    <h2 className='text-main'>Welcome back to Fuel Depot, {username}!</h2>
                 </div>
             </div>
         )
