@@ -45,7 +45,7 @@ export default function Register() {
                     alert(res.data.message);
                 }
             }).catch((err) => {
-                let errMsg = JSON.stringify(err.response.data)
+                let errMsg = JSON.stringify(err.response.data.error)
                 alert(errMsg || err);
             })
         }

@@ -20,7 +20,7 @@ export default function Homepage() {
             <div className='body'>
                 <div className='text-main-container'>
                     <h2 className='text-main'>Welcome to Feul Depot!</h2>
-                    <p className='input-label' style={{fontSize: '20px'}}>Providing a sustainable source of petroleum to your local <br />fueling business since 1400 B.C.</p>
+                    <p className='input-label' style={{fontSize: '20px'}}>Providing a sustainable source of petroleum to your local <br />fueling business since Spring 2023</p>
                 </div>
             </div>
         )
