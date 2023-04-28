@@ -165,6 +165,27 @@ describe('POST /quotes', () => {
         expect(res.body.message).toBe("Quote submitted successfully!")
     })
 })
+
+describe('POST for pricing module', () => {
+    it('should calculate quote using pricing module',  async() => {
+        let res = await request(app).post('/pricing').send({
+            values: {
+                username: mockUser.username,
+                address: "12354 Main St",
+                deliveryDate: new Date(),
+                gallonsReq: 150,
+                pricePerGallon: 0,
+                total: 0
+            }
+        });
+        let margin = 1.50 * (res.body.location - res.body.history + res.body.above + res.body.profit)
+        let pricePerGallon = 1.50 + margin;
+        let total = pricePerGallon * res.body.gallonsReq;
+        expect(res.body.pricePerGallon).toBe(pricePerGallon);
+        expect(res.body.total).toBe(total);
+    });
+})
+
 describe('GET /quotes with quotes', () => {
     it('should return the user quotes', async () => {
         let res = await request(app).get('/quotes').query({username: mockUser.username})

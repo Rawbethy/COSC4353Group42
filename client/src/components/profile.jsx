@@ -58,7 +58,7 @@ export default function Profile() {
         username: username,
         fullName: '',
         address1: '',
-        address2: '',
+        address2: ' ',
         city: '',
         state: '',
         zip: '',
@@ -75,10 +75,11 @@ export default function Profile() {
         }));
     }
 
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
         if(JSON.stringify(errors) === '{}') {
-            axios.post('http://localhost:5000/profile', {values})
+            console.log(values)
+            await axios.post('http://localhost:5000/profile', {values})
             .then((res) => {
                 alert(res.data.message);
             })
@@ -90,10 +91,8 @@ export default function Profile() {
 
     useEffect(() => {
         if(values === initialState) {
-            axios.get('http://localhost:5000/profile', {params: {
-                'username': username}
-            }).then((res) => {
-                if(!res.data) {
+            axios.get('http://localhost:5000/profile', {params: {username: username}}).then((res) => {
+                if(res.data.message === 'Profile not found') {
                     setValues(values);
                 }
                 else {
@@ -101,7 +100,7 @@ export default function Profile() {
                 }
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err)   
             });
         }
         setErrors(Validate(values));

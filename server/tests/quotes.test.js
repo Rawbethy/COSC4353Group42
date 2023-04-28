@@ -56,19 +56,3 @@ describe('quotes', () => {
 
     });
 });
-
-const PricingModule = require('../models/pricing.js');
-
-describe('pricemodule', () => {
-    const ts = new Date();
-    let pricingModule = new PricingModule("test", ts, "150", "1.50", "225.00");
-    test('should create a new quote',  () => {
-        expect(pricingModule.address).toBe("test");
-        expect(pricingModule.deliveryDate).toBe(ts);
-        expect(pricingModule.gallonsReq).toBe("150");
-        expect(pricingModule.pricePerGallon).toBe("1.50");
-        expect(pricingModule.total).toBe("225.00");
-
-        expect(pricingModule.totalPrice()).toBe("225.00");
-    });
-})
