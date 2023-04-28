@@ -16,6 +16,7 @@ const profileSchema = new mongoose.Schema({
     },
     address2: {
         type: String,
+        required: false
     },
     city: {
         type: String,
