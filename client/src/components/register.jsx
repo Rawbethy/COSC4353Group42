@@ -45,7 +45,8 @@ export default function Register() {
                     alert(res.data.message);
                 }
             }).catch((err) => {
-                alert(err);
+                let errMsg = JSON.stringify(err.response.data)
+                alert(errMsg || err);
             })
         }
     }

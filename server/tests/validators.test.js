@@ -58,10 +58,73 @@ describe('validateRegister', () => {
             .send({})
             .expect(400);
     })
+    // password
     test('should return 400 if password too short', () => {
         return supertest(app)
             .post('/register')
             .send({newUser: {username: 'username', email: "testemail@email.com", password: 'pass'}})
+            .expect(400);
+    })
+    test('should return 400 if password too long', () => {
+        return supertest(app)
+            .post('/register')
+            .send({
+                newUser: {
+                    username: 'username',
+                    email: "test@email.com",
+                    password: 'password'.repeat(21)
+                }
+            })
+            .expect(400);
+    })
+    // username
+    test('should return 400 if username too short', () => {
+        return supertest(app)
+            .post('/register')
+            .send({
+                newUser: {
+                    username: 'us',
+                    email: "testemail@email.com",
+                    password: 'password'
+                }
+            })
+            .expect(400);
+    })
+    test('should return 400 if username too long', () => {
+        return supertest(app)
+            .post('/register')
+            .send({ 
+                newUser: {
+                    username: 'username'.repeat(33),
+                    email: "test@email.com",
+                    password: 'password'
+                }
+            })
+            .expect(400);
+    })
+    //email
+    test('should return 400 if email too short', () => {
+        return supertest(app)
+            .post('/register')
+            .send({
+                newUser: {
+                    username: 'username',
+                    email: "te",
+                    password: 'password'
+                }
+            })
+            .expect(400);
+    })
+    test('should return 400 if email too long', () => {
+        return supertest(app)
+            .post('/register')
+            .send({
+                newUser: {
+                    username: 'username',
+                    email: "email".repeat(64) + "@gmail.com",
+                    password: 'password'
+                }
+            })
             .expect(400);
     })
 });
