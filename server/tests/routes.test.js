@@ -140,7 +140,7 @@ describe('POST /quotes', () => {
             values: {
                 username: mockUser.username,
                 address: "1234 Main St",
-                deliveryDate: new Date(),
+                deliveryDate: new Date(Date.now() + 10000),
                 gallonsReq: 100,
                 pricePerGallon: 1.50,
                 total: 150
@@ -155,7 +155,7 @@ describe('POST /quotes', () => {
             values: {
                 username: mockUser.username,
                 address: "12354 Main St",
-                deliveryDate: new Date(),
+                deliveryDate: new Date(Date.now() + 10000),
                 gallonsReq: 1020,
                 pricePerGallon: 1.250,
                 total: 1505
@@ -172,7 +172,7 @@ describe('POST for pricing module', () => {
             values: {
                 username: mockUser.username,
                 address: "12354 Main St",
-                deliveryDate: new Date(),
+                deliveryDate: new Date(Date.now() + 10000),
                 gallonsReq: 150,
                 pricePerGallon: 0,
                 total: 0

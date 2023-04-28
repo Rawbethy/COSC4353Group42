@@ -3,16 +3,22 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {UserContext} from '../App';
 
-export function checkGallons(values) {
+export function checkErrors(values) {
     let errors = {};
 
     for(const item in values) {
         switch(item) {
             case 'gallonsReq':
-                 if(values[item] < 0) {
+                 if(values[item] <= 0) {
                     errors.gallonsReq = 'Needs to be a valid/positive number of gallons'
                  }
                 break;   
+            case 'deliveryDate':
+                let date = new Date(values[item])
+                if(date < Date.now()) {
+                    errors.deliveryDate = 'Delivery date cannot be in the past.'
+                }
+                break;
             default:
                 break;
         }
@@ -52,9 +58,14 @@ export default function QuoteForm() {
     }
 
     const getQuote = async(e) => {
-        setCurrGallons(values.gallonsReq)
-        setErrors(checkGallons(values));
         e.preventDefault();
+        setCurrGallons(values.gallonsReq)
+
+        let myerrors = checkErrors(values);
+        if(Object.keys(myerrors).length > 0) {
+            setErrors(myerrors);
+            return;
+        }
         await axios.post('http://localhost:5000/pricing', {values}).then(res => {
             setValues((values) => ({
                 ...values,
@@ -109,8 +120,9 @@ export default function QuoteForm() {
                     <br />
             
                     <div className="deliverydate"> 
-                        <label className='input-label'>Devliery Date:</label>                    
-                        <input type="date" name='deliveryDate' onChange={updateField} required/>
+                        <label className='input-label'>Delivery Date:</label>                    
+                        <input type="datetime-local" name='deliveryDate' onChange={updateField} required/>
+                        {errors.deliveryDate && <span style={{"color": "red"}}>{errors.deliveryDate}</span>}
                     </div>
                     <br />
             

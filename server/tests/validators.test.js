@@ -58,6 +58,12 @@ describe('validateRegister', () => {
             .send({})
             .expect(400);
     })
+    test('should return 400 if password too short', () => {
+        return supertest(app)
+            .post('/register')
+            .send({newUser: {username: 'username', email: "testemail@email.com", password: 'pass'}})
+            .expect(400);
+    })
 });
 
 describe('validateProfile', () => {
@@ -269,14 +275,27 @@ describe('validateQuote', () => {
             })
             .expect(400);
     })
+    test('should return 400 if deliveryDate not in the future', () => {
+        return supertest(app)
+            .post('/quotes')
+            .send({
+                values: {
+                    username: 'username',
+                    deliveryDate: new Date('2019-01-01'),
+                    gallonsReq: 100
+                }
+            })
+            .expect(400);
+    })
+
     test('should return 400 if gallonsReq not a number', () => {
         return supertest(app)
             .post('/quotes')
             .send({
                 values: {
                     username: 'username',
-                    deliveryDate: '2020-01-01',
-                    gallonsReq: 'not a number'
+                    deliveryDate: new Date(Date.now() + 1000),
+                    gallonsReq: '@@@'
                 }
             })
             .expect(400);
