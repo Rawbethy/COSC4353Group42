@@ -16,10 +16,7 @@ const profileSchema = new mongoose.Schema({
     },
     address2: {
         type: String,
-<<<<<<< HEAD
         required: false
-=======
->>>>>>> d9f6d310 (042723)
     },
     city: {
         type: String,
