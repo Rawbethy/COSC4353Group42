@@ -53,12 +53,11 @@ export function Validate(values) {
 export default function Profile() {
 
     const {username} = useContext(UserContext);
-    const {address} = useContext(UserContext);
     const [errors, setErrors] = useState({});
     const initialState = {
         username: username,
         fullName: '',
-        address1: address,
+        address1: '',
         address2: ' ',
         city: '',
         state: '',
