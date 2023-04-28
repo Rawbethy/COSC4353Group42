@@ -90,6 +90,15 @@ export default function QuoteForm() {
     }
 
     useEffect(() => {
+        async function fetchData() {
+            await axios.get('http://localhost:5000/profile', {params: {username: username}}).then((res) => {
+                if(res.data.message === 'Profile not found') {
+                    navigate('/profile')
+                    alert('Need to update your profile before getting a quote')
+                }
+            })
+        }
+        fetchData();
         setValues(values);
         setClassValues(classValues);
         if(values['gallonsReq'] !== '' && values['deliveryDate'] !== '' && values['address'] !== '') {
