@@ -58,19 +58,6 @@ export default function OrderHistory() {
     )
   }
 
-  const fetchRequest = useCallback(() => {
-    async function fetchData() {
-      await axios.get('http://localhost:5000/quotes', {params: {username: username}}).then((res) => {
-        if(res.data.noQuotes !== true) {
-          setOrders(res.data);
-        }
-      }).catch(err => {
-        console.error(err);
-      })
-    }
-    fetchData();
-  }, [])
-
   useEffect(() => {
     async function fetchData() {
       await axios.get('http://localhost:5000/quotes', {params: {username: username}}).then((res) => {
