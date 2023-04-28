@@ -57,6 +57,7 @@ export default function QuoteForm() {
             ...values,
             [e.target.name]: e.target.value
         }));
+        setErrors(checkErrors(values));
     }
 
     const getQuote = async(e) => {
@@ -140,8 +141,8 @@ export default function QuoteForm() {
                     <br />
             
                     <div className="deliverydate"> 
-                        <label className='input-label'>Devliery Date:</label>                    
-                        <input type="date" name='deliveryDate' onChange={updateField} required/>
+                        <label className='input-label'>Delivery Date:</label>                    
+                        <input type="datetime-local" name='deliveryDate' onChange={updateField} required/>
                         {errors.deliveryDate && <span style={{"color": "red"}}>{errors.deliveryDate}</span>}
                     </div>
                     <br />
