@@ -31,6 +31,7 @@ function Login() {
 
         axios.post('http://localhost:5000/login', {credentials}).then((res) => {
             if(res.data.result === true) {
+                console.log(credentials);
                 setUsername(creds.username);
                 setLoginStatus(true);
                 navigate('/');

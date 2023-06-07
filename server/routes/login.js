@@ -5,7 +5,7 @@ const validateLogin = require('../middleware/validateLogin');
 
 let User = require('../models/user');
 
-router.route('/').post(validateLogin, async(req, res) => {
+router.route('/').post(async(req, res) => {
     const cred = req.body.credentials;
 
     const user = await User.findOne({username: cred.username});
@@ -20,5 +20,9 @@ router.route('/').post(validateLogin, async(req, res) => {
     }
     res.json({result: false});
 });
+
+router.route('/').get(async(req, res) => {
+    res.json({message: "What's up from Express backend"});
+})
 
 module.exports = router
